@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">WelderAkS</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="employers">Работники</string>
+    <string name="finance">Финансы</string>
+    <string name="instruments">Инструменты</string>
+</resources>
