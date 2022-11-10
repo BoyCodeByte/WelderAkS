@@ -2,16 +2,17 @@ package com.boycodebyte.welderaks.data.storage
 
 import com.boycodebyte.welderaks.data.models.LoginParam
 import com.boycodebyte.welderaks.data.models.LoginUser
+import com.boycodebyte.welderaks.data.models.RegisterParam
 import com.google.firebase.database.FirebaseDatabase
 
 const val CHILD = "login_users"
 
 class FirebaseLoginUserStorage {
-    fun login(param: LoginParam): LoginUser? {
+    fun getLoginUserList(): Result<List<LoginUser>> {
         return TODO()
     }
 
-    fun register(param: LoginParam) {
+    fun addLoginUser(param: RegisterParam) {
         val myRef = FirebaseDatabase.getInstance().reference
         myRef.child(CHILD).child(param.login)
             .updateChildren(

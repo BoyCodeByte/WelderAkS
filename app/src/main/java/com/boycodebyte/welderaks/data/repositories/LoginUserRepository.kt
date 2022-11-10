@@ -8,7 +8,7 @@ import com.boycodebyte.welderaks.data.storage.FirebaseLoginUserStorage
 class LoginUserRepository(private val storage: FirebaseLoginUserStorage) {
 
     fun getLoginUser(param: LoginParam): LoginUser {
-        val loginUser = storage.login(param)
+        val loginUser = storage.getLoginUserList(param)
         if(loginUser == null){
             throw LoginException()
         } else {
@@ -17,7 +17,7 @@ class LoginUserRepository(private val storage: FirebaseLoginUserStorage) {
     }
 
     fun addLoginUser(param: LoginParam) {
-        storage.register(param)
+        storage.addLoginUser(param)
     }
 
 }
