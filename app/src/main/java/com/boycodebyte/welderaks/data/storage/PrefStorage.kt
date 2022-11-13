@@ -8,22 +8,24 @@ private const val AUTH_PREF = "auth_pref"
 private const val LOGIN_PARAM = "login_param"
 private const val PASSWORD_PARAM = "password_param"
 
-class PrefLoginParamStorage(private val context: Context) {
+class PrefStorage(private val context: Context) {
 
-    private val sharedPreferences =
-        context.getSharedPreferences(AUTH_PREF, Context.MODE_PRIVATE)
 
-    fun getLoginParam(): Result<LoginParam> {
+    fun getLoginParam(): LoginParam {
+        val sharedPreferences =
+            context.getSharedPreferences(AUTH_PREF, Context.MODE_PRIVATE) ?: throw LoginParamException()
         val login = sharedPreferences.getString(LOGIN_PARAM, null)
         val password = sharedPreferences.getString(PASSWORD_PARAM, null)
         return if (login != null && password != null) {
-            Result.success(LoginParam(login, password))
+            return LoginParam(login, password)
         } else {
-            Result.failure(LoginParamException())
+            throw LoginParamException()
         }
     }
 
     fun saveLoginParam(param: LoginParam) {
+        val sharedPreferences =
+            context.getSharedPreferences(AUTH_PREF, Context.MODE_PRIVATE)?: throw LoginParamException()
         sharedPreferences.edit().putString(LOGIN_PARAM, param.login).apply()
         sharedPreferences.edit().putString(PASSWORD_PARAM, param.password).apply()
     }

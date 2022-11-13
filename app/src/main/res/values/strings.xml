@@ -6,4 +6,7 @@
     <string name="employers">Работники</string>
     <string name="finance">Финансы</string>
     <string name="instruments">Инструменты</string>
+    <string name="login_hint">Логин</string>
+    <string name="password_hint">Пароль</string>
+    <string name="login_in">Войти</string>
 </resources>
