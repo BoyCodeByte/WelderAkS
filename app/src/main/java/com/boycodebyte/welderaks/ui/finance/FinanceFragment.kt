@@ -1,19 +1,22 @@
 package com.boycodebyte.welderaks.ui.finance
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.boycodebyte.welderaks.data.storage.FirebaseStorage
 import com.boycodebyte.welderaks.databinding.FragmentFinanceBinding
 
 
 class FinanceFragment : Fragment() {
 
-    private var _binding: FragmentFinanceBinding? = null
+    val storage = FirebaseStorage()
 
+    private var _binding: FragmentFinanceBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -32,6 +35,13 @@ class FinanceFragment : Fragment() {
             textView.text = it
         }
         return root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        storage.getLoginUsersList{ list ->
+            println(list)
+        }
     }
 
     override fun onDestroyView() {

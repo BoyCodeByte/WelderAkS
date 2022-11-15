@@ -2,12 +2,13 @@ package com.boycodebyte.welderaks.data.repositories
 
 import com.boycodebyte.welderaks.data.models.LoginUser
 import com.boycodebyte.welderaks.data.models.RegisterParam
+import com.boycodebyte.welderaks.data.storage.Callback
 import com.boycodebyte.welderaks.data.storage.FirebaseStorage
 
 class LoginUsersRepository(private val storage: FirebaseStorage) {
 
-    fun getLoginUsersList(): List<LoginUser> {
-        return storage.getLoginUsersList()
+    fun getLoginUsersList(callback: Callback){
+       storage.getLoginUsersList(callback)
     }
 
     fun addLoginUser(param: RegisterParam) {

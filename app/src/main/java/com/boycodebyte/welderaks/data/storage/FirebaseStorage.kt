@@ -1,5 +1,6 @@
 package com.boycodebyte.welderaks.data.storage
 
+import android.util.Log
 import com.boycodebyte.welderaks.data.exceptions.FireBaseException
 import com.boycodebyte.welderaks.data.models.LoginUser
 import com.boycodebyte.welderaks.data.models.RegisterParam
@@ -9,37 +10,24 @@ const val LOGIN_USERS_CHILD = "login_users"
 const val LOGIN_CHILD = "login"
 const val PASSWORD_CHILD = "password"
 const val ID_CHILD = "id"
+typealias Callback = (List<LoginUser>) -> Unit
 
 class FirebaseStorage {
 
-    fun getLoginUsersList(): List<LoginUser> {
+    fun getLoginUsersList(callback: Callback){
         val myRef = FirebaseDatabase.getInstance().reference
-        val task = myRef.child(LOGIN_USERS_CHILD).get()
-        if (task.isSuccessful){
-            val snapshotList = task.result.children
+        myRef.child(LOGIN_USERS_CHILD).get().addOnSuccessListener {
+            val snapshotList = it.children
             val loginUsersList = mutableListOf<LoginUser>()
-            for(userChild in snapshotList){
+            for (userChild in snapshotList) {
                 val login = userChild.child(LOGIN_CHILD).value.toString()
                 val password = userChild.child(PASSWORD_CHILD).value.toString()
                 val id = userChild.child(ID_CHILD).value.toString().toInt()
                 val loginUser = LoginUser(login, password, id)
                 loginUsersList.add(loginUser)
             }
-            return loginUsersList
-        }else {
-            throw FireBaseException()
+            callback.invoke(loginUsersList)
         }
-//        myRef.child(LOGIN_USERS_CHILD).get().addOnSuccessListener {
-//            val snapshotList = it.children
-//            val loginUsersList = mutableListOf<LoginUser>()
-//            for(userChild in snapshotList){
-//                val login = userChild.child(LOGIN_CHILD).value.toString()
-//                val password = userChild.child(PASSWORD_CHILD).value.toString()
-//                val id = userChild.child(ID_CHILD).value.toString().toInt()
-//                val loginUser = LoginUser(login, password, id)
-//                loginUsersList.add(loginUser)
-//            }
-//        }
     }
 
     fun addLoginUser(param: RegisterParam) {
@@ -54,7 +42,7 @@ class FirebaseStorage {
             )
     }
 
-    fun removeLoginUser(user: LoginUser){
+    fun removeLoginUser(user: LoginUser) {
 
     }
 }
