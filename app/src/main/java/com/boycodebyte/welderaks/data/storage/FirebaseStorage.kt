@@ -108,9 +108,9 @@ class FirebaseStorage {
             for (userChild in snapshotList) {
                 val instrument = Instrument(
                     id = userChild.key.toString().toInt(),
-                    name = userChild.child(SURNAME_CHILD).value.toString(),
-                    description = userChild.child(DATE_OF_BIRTH_CHILD).value.toString(),
-                    idOfProfile = userChild.child(DATE_OF_BIRTH_CHILD).value.toString().toInt()
+                    name = userChild.child(NAME_CHILD).value.toString(),
+                    description = userChild.child(DESCRIPTION_CHILD).value.toString(),
+                    idOfProfile = userChild.child(ID_PROFILE_CHILD).value.toString().toInt()
                 )
                 profilesList.add(instrument)
             }
