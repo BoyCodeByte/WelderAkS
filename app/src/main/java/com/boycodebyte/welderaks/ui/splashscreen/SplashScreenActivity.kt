@@ -51,6 +51,7 @@ class SplashScreenActivity : AppCompatActivity() {
             } catch (e: LoginParamException) {
                 val intent = Intent(this@SplashScreenActivity, LoginActivity::class.java)
                 startActivity(intent)
+                finish()
             }
         }
     }

@@ -5,10 +5,10 @@ import com.boycodebyte.welderaks.data.repositories.LoginUsersRepository
 import com.boycodebyte.welderaks.domain.models.ErrorResult
 import com.boycodebyte.welderaks.domain.models.PendingResult
 import com.boycodebyte.welderaks.domain.models.SuccessResult
-import com.boycodebyte.welderaks.domain.models.LoginResult
+import com.boycodebyte.welderaks.domain.models.UiResult
 import java.lang.Exception
 
-typealias LoginCallback = (LoginResult<LoginUser>) -> Unit
+typealias LoginCallback = (UiResult<LoginUser>) -> Unit
 
 class LoginUseCase(private val repository: LoginUsersRepository) {
     fun execute(param: LoginParam, callback: LoginCallback) {
@@ -28,6 +28,5 @@ class LoginUseCase(private val repository: LoginUsersRepository) {
                 callback.invoke(ErrorResult(Exception()))
             }
         }
-
     }
 }
