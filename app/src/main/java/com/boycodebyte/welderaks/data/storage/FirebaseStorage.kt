@@ -15,7 +15,7 @@ const val PASSWORD_CHILD = "password"
 
 //child of PROFILES_CHILD
 const val NAME_CHILD = "name"
-const val SURNAME_CHILD = "lastname"
+const val SURNAME_CHILD = "surname"
 const val DATE_OF_BIRTH_CHILD = "date_of_birth"
 const val JOB_TITLE_CHILD = "job_title"
 
@@ -65,6 +65,7 @@ class FirebaseStorage {
     }
 
     fun getProfilesList(profilesCallback: ProfilesCallback) {
+        println("Run")
         val myRef = FirebaseDatabase.getInstance().reference
         myRef.child(PROFILES_CHILD).get().addOnSuccessListener {
             val snapshotList = it.children
@@ -72,8 +73,8 @@ class FirebaseStorage {
             for (userChild in snapshotList) {
                 val profile = Profile(
                     id = userChild.key.toString().toInt(),
-                    name = userChild.child(SURNAME_CHILD).value.toString(),
-                    surname = userChild.child(DATE_OF_BIRTH_CHILD).value.toString(),
+                    name = userChild.child(NAME_CHILD).value.toString(),
+                    surname = userChild.child(SURNAME_CHILD).value.toString(),
                     dateOfBirth = userChild.child(DATE_OF_BIRTH_CHILD).value.toString(),
                     jobTitle = userChild.child(JOB_TITLE_CHILD).value.toString()
                 )
@@ -103,18 +104,18 @@ class FirebaseStorage {
     fun getInstrumentsList(instrumentsCallback: InstrumentsCallback) {
         val myRef = FirebaseDatabase.getInstance().reference
         myRef.child(INSTRUMENTS_CHILD).get().addOnSuccessListener {
-            val snapshotList = it.children
-            val profilesList = mutableListOf<Instrument>()
-            for (userChild in snapshotList) {
+            val childList = it.children
+            val instrumentList = mutableListOf<Instrument>()
+            for (instrumentChild in childList) {
                 val instrument = Instrument(
-                    id = userChild.key.toString().toInt(),
-                    name = userChild.child(NAME_CHILD).value.toString(),
-                    description = userChild.child(DESCRIPTION_CHILD).value.toString(),
-                    idOfProfile = userChild.child(ID_PROFILE_CHILD).value.toString().toInt()
+                    id = instrumentChild.key.toString().toInt(),
+                    name = instrumentChild.child(NAME_CHILD).value.toString(),
+                    description = instrumentChild.child(DESCRIPTION_CHILD).value.toString(),
+                    idOfProfile = instrumentChild.child(ID_PROFILE_CHILD).value.toString().toInt()
                 )
-                profilesList.add(instrument)
+                instrumentList.add(instrument)
             }
-            instrumentsCallback.invoke(profilesList)
+            instrumentsCallback.invoke(instrumentList)
         }
     }
 
@@ -132,6 +133,7 @@ class FirebaseStorage {
     }
 
     fun removeInstrument(id: Int) {
-
+        val myRef = FirebaseDatabase.getInstance().reference
+        myRef.child(INSTRUMENTS_CHILD).child(id.toString()).removeValue()
     }
 }

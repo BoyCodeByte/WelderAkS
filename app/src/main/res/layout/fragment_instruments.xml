@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.instruments.InstrumentsFragment">
 
-    <TextView
+    <!--<TextView
         android:id="@+id/text_notifications"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,5 +18,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <Button
+        android:id="@+id/add_instrument"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_instrument"
+        app:layout_constraintTop_toBottomOf="@id/recyclerView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
