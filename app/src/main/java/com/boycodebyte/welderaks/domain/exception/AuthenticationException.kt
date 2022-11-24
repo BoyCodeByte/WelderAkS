@@ -1,4 +1,3 @@
 package com.boycodebyte.welderaks.domain.exception
 
-class AuthenticationException {
-}
+class AuthenticationException: Exception()

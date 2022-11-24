@@ -1,13 +1,13 @@
 package com.boycodebyte.welderaks.data.repositories
 
+import com.boycodebyte.welderaks.data.models.Instrument
 import com.boycodebyte.welderaks.data.models.Profile
 import com.boycodebyte.welderaks.data.storage.FirebaseStorage
-import com.boycodebyte.welderaks.data.storage.InstrumentsCallback
 
 class InstrumentRepository(private val storage: FirebaseStorage) {
 
-    fun getInstrumentsList(instrumentsCallback: InstrumentsCallback) {
-       storage.getInstrumentsList(instrumentsCallback)
+    fun getInstrumentsList(): List<Instrument> {
+       return storage.getInstrumentsList()
     }
 
     fun addInstrument(profile: Profile) {

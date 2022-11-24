@@ -39,9 +39,6 @@ class FinanceFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        storage.getLoginUsersList{ list ->
-            println(list)
-        }
     }
 
     override fun onDestroyView() {

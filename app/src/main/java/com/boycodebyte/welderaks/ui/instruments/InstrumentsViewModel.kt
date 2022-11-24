@@ -21,48 +21,18 @@ class InstrumentsViewModel : ViewModel() {
     private val deleteInstrumentByIDUseCase=DeleteInstrumentByIDUseCase(InstrumentRepository(FirebaseStorage()))
     private val getProfilesUseCase=GetProfilesUseCase(ProfileRepository(FirebaseStorage()))
 
-    private val _instrumentLiveData = MutableLiveData<List<Instrument>>().apply {
-        updateInstrumentsList()
-    }
+    private val _instrumentLiveData = MutableLiveData<List<Instrument>>()
     val instrumentLiveData: LiveData<List<Instrument>> = _instrumentLiveData
 
-    private val _profileLiveData = MutableLiveData<List<Profile>>().apply {
-        updateProfilesList()
-    }
+    private val _profileLiveData = MutableLiveData<List<Profile>>()
     val profileLiveData: LiveData<List<Profile>> = _profileLiveData
 
     fun updateInstrumentsList(){
-        instrumentsUseCase.execute {
-            when(it){
-                is SuccessResult->{
-                    _instrumentLiveData.value=it.data
-                    println(it.data)
-                }
-                is ErrorResult->{
-                    println("Error")
-                }
-                is PendingResult->{
-
-                }
-            }
-        }
+        _instrumentLiveData.value = instrumentsUseCase.execute()
     }
 
     fun updateProfilesList(){
-        getProfilesUseCase.execute {
-            when(it){
-                is SuccessResult->{
-                    _profileLiveData.value=it.data
-                    println(it.data)
-                }
-                is ErrorResult->{
-                    println("Error")
-                }
-                is PendingResult->{
-
-                }
-            }
-        }
+        _profileLiveData.value = getProfilesUseCase.execute()
     }
 
     fun deleteInstrument(instrument: Instrument){

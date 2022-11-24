@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.boycodebyte.welderaks.data.storage.PROFILES_CHILD
 import com.boycodebyte.welderaks.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.database.FirebaseDatabase
@@ -26,6 +27,15 @@ class MainActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         navView.setupWithNavController(navController)
+
+        Thread{
+            val myRef = FirebaseDatabase.getInstance().reference
+            val res = myRef.get()
+            while (!res.isComplete){}
+            if(res.isSuccessful){
+                res.result.children.forEach{ println(it.key)}
+            }
+        }.start()
 
     }
 

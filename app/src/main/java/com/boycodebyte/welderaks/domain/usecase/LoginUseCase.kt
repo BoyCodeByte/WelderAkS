@@ -1,32 +1,27 @@
 package com.boycodebyte.welderaks.domain.usecase
 
-import com.boycodebyte.welderaks.data.models.*
-import com.boycodebyte.welderaks.data.repositories.LoginUsersRepository
-import com.boycodebyte.welderaks.domain.models.ErrorResult
-import com.boycodebyte.welderaks.domain.models.PendingResult
-import com.boycodebyte.welderaks.domain.models.SuccessResult
-import com.boycodebyte.welderaks.domain.models.UiResult
-import java.lang.Exception
+import com.boycodebyte.welderaks.data.models.LoginParam
+import com.boycodebyte.welderaks.data.models.Profile
+import com.boycodebyte.welderaks.data.repositories.ProfileRepository
+import com.boycodebyte.welderaks.domain.exception.AuthenticationException
 
-typealias LoginCallback = (UiResult<LoginUser>) -> Unit
 
-class LoginUseCase(private val repository: LoginUsersRepository) {
-    fun execute(param: LoginParam, callback: LoginCallback) {
-        callback.invoke(PendingResult())
-        repository.getLoginUsersList { loginUsersList ->
-            var currentLoginUser: LoginUser? = null
-            for(loginUser in loginUsersList){
-                if (loginUser.login == param.login
-                    && loginUser.password == param.password){
-                    currentLoginUser = loginUser
-                    break
-                }
+class LoginUseCase(private val repository: ProfileRepository) {
+    fun execute(param: LoginParam): Profile {
+        val profileList = repository.getProfilesList()
+        var currentProfile: Profile? = null
+        for (profile in profileList) {
+            if (profile.login == param.login
+                && profile.password == param.password
+            ) {
+                currentProfile = profile
+                break
             }
-            if(currentLoginUser != null) {
-                callback.invoke(SuccessResult(currentLoginUser))
-            } else {
-                callback.invoke(ErrorResult(Exception()))
-            }
+        }
+        if (currentProfile != null) {
+            return currentProfile
+        } else {
+            throw AuthenticationException()
         }
     }
 }
