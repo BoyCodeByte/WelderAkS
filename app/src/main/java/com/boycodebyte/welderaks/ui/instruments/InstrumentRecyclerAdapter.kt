@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.boycodebyte.welderaks.R
 import com.boycodebyte.welderaks.data.models.Instrument
@@ -66,7 +67,6 @@ class InstrumentRecyclerAdapter(private val actionListeners: InstrumentActionLis
             deleteImageButton.setImageResource(R.drawable.delete)
 
             instNameTextView.text = instrument.name
-//            fixedUser.text=instrument.idOfProfile.toString()
             users.forEach {
                 if (it.id == instrument.idOfProfile) {
                     fixedUser.text = "${it.name} ${it.surname}"
@@ -74,15 +74,6 @@ class InstrumentRecyclerAdapter(private val actionListeners: InstrumentActionLis
                 println(it)
             }
             photoImageInstr.setImageResource(R.drawable.ic_instruments)
-
-//            if (instrument.image.isNotBlank()){
-//                Glide.with(photoImageInstr.context).load(instrument.image).circleCrop()
-//                    .placeholder(R.drawable.ic_instr_avatar)
-//                    .error(R.drawable.ic_instr_avatar)
-//                    .into(photoImageInstr)
-//            }else{
-//                photoImageInstr.setImageResource(R.drawable.ic_instr_avatar)
-//            }
         }
     }
 
@@ -111,6 +102,7 @@ class InstrumentRecyclerAdapter(private val actionListeners: InstrumentActionLis
         private const val ID_REMOVE = 1
 
     }
+
 
     class InstrumentHolder(val binding: ItemInstrumentBinding) :
         RecyclerView.ViewHolder(binding.root)
