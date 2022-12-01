@@ -5,12 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
+import com.boycodebyte.welderaks.R
 import com.boycodebyte.welderaks.data.models.Instrument
 import com.boycodebyte.welderaks.databinding.FragmentInstrumentsBinding
+import com.boycodebyte.welderaks.ui.instruments.detailsinstrument.INSTRUMENT_KEY
+import com.boycodebyte.welderaks.ui.instruments.detailsinstrument.InstrumentDetailsViewModel
+import kotlin.concurrent.fixedRateTimer
 
 
 class InstrumentsFragment : Fragment() {
@@ -23,23 +31,6 @@ class InstrumentsFragment : Fragment() {
 
     private val binding get() = _binding!!//old
 
-//    override fun onCreateView(
-//        inflater: LayoutInflater,
-//        container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View {
-//        val instrumentsViewModel =
-//            ViewModelProvider(this).get(InstrumentsViewModel::class.java)
-//
-//        _binding = FragmentInstrumentsBinding.inflate(inflater, container, false)
-//        val root: View = binding.root
-//
-//        val textView: TextView = binding.textNotifications
-//        instrumentsViewModel.text.observe(viewLifecycleOwner) {
-//            textView.text = it
-//        }
-//        return root
-//    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,15 +43,17 @@ class InstrumentsFragment : Fragment() {
         _binding = FragmentInstrumentsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+
         adapter = InstrumentRecyclerAdapter(object : InstrumentActionListeners {
             override fun onInstrumentDelete(instrument: Instrument) {
                 instrumentsViewModel.deleteInstrument(instrument)
             }
 
             override fun onInstrumentDetails(instrument: Instrument) {
-                TODO("Not yet implemented")
+                println("tool:${instrument.id}")
+                val action=InstrumentsFragmentDirections.actionNavigationInstrumentsToInstrumentDetailsFragment(instrument.id)
+                view!!.findNavController().navigate(action)
             }
-
         })
 
         binding.recyclerView.adapter = adapter

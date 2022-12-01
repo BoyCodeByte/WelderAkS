@@ -4,14 +4,16 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.boycodebyte.welderaks.data.models.Instrument
 import com.boycodebyte.welderaks.data.storage.PROFILES_CHILD
 import com.boycodebyte.welderaks.databinding.ActivityMainBinding
+import com.boycodebyte.welderaks.ui.instruments.detailsinstrument.InstrumentDetailsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(){
 
     private lateinit var binding: ActivityMainBinding
 

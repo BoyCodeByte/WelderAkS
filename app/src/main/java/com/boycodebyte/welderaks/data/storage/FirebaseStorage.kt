@@ -125,4 +125,21 @@ class FirebaseStorage {
         val myRef = FirebaseDatabase.getInstance().reference
         myRef.child(INSTRUMENTS_CHILD).child(id.toString()).removeValue()
     }
+
+    fun upDateDetailsInstrument(instrument: Instrument){
+        val myRef=FirebaseDatabase.getInstance().reference
+        myRef.child(INSTRUMENTS_CHILD).child(instrument.id.toString())
+            .updateChildren(
+                mapOf(
+                    DESCRIPTION_CHILD to instrument.description,
+                    NAME_CHILD to instrument.name,
+                    ID_PROFILE_CHILD to instrument.idOfProfile
+                )
+            )
+    }
+
+    fun getInstrumentById(id: Int):Instrument{
+        val instrument=getInstrumentsList().firstOrNull(){it.id==id}?:throw InstrumentRequestException()
+        return instrument
+    }
 }

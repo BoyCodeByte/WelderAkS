@@ -6,6 +6,6 @@ data class Instrument(
     val id: Int = 0,
 //    val image:String,
     val name: String = "",
-    val description: String = "",
-    val idOfProfile: Int = 0
+    var description: String = "",
+    var idOfProfile: Int = 0
 )
