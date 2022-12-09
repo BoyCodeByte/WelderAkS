@@ -108,17 +108,18 @@ class FirebaseStorage {
         return instrumentList
     }
 
-    fun addInstrument(profile: Profile) {
+
+//    //////////////////////////////////////////////////////
+    fun addInstrument(instrument: Instrument) {
         val myRef = FirebaseDatabase.getInstance().reference
-        myRef.child(INSTRUMENTS_CHILD).child(profile.id.toString())
-            .updateChildren(
-                mapOf(
-                    NAME_CHILD to profile.name,
-                    SURNAME_CHILD to profile.surname,
-                    DATE_OF_BIRTH_CHILD to profile.dateOfBirth,
-                    JOB_TITLE_CHILD to profile.jobTitle,
-                )
+        myRef.child(INSTRUMENTS_CHILD).child(instrument.id.toString())
+        .updateChildren(
+            mapOf(
+                DESCRIPTION_CHILD to instrument.description,
+                ID_PROFILE_CHILD to instrument.idOfProfile,
+                NAME_CHILD to instrument.name
             )
+        )
     }
 
     fun removeInstrument(id: Int) {

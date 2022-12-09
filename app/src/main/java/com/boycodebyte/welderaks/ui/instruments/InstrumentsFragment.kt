@@ -4,26 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
-import com.boycodebyte.welderaks.R
 import com.boycodebyte.welderaks.data.models.Instrument
 import com.boycodebyte.welderaks.databinding.FragmentInstrumentsBinding
-import com.boycodebyte.welderaks.ui.instruments.detailsinstrument.INSTRUMENT_KEY
-import com.boycodebyte.welderaks.ui.instruments.detailsinstrument.InstrumentDetailsViewModel
-import kotlin.concurrent.fixedRateTimer
 
 
 class InstrumentsFragment : Fragment() {
 
-    private var _binding: FragmentInstrumentsBinding? = null//old
+    private var _binding: FragmentInstrumentsBinding? = null
     private lateinit var adapter: InstrumentRecyclerAdapter
     private lateinit var layoutManager: LayoutManager
     private lateinit var instrumentsViewModel:InstrumentsViewModel
@@ -64,6 +56,12 @@ class InstrumentsFragment : Fragment() {
 
         instrumentsViewModel.profileLiveData.observe(viewLifecycleOwner){
             adapter.users=it
+        }
+
+        binding.addInstrument.setOnClickListener {
+            val action=InstrumentsFragmentDirections.actionNavigationInstrumentsToAdditionInstrumentFragment()
+            it.findNavController().navigate(action)
+
         }
 
         return root

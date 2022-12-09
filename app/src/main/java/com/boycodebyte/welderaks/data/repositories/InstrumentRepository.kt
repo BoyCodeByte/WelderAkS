@@ -11,8 +11,8 @@ class InstrumentRepository(private val storage: FirebaseStorage) {
        return storage.getInstrumentsList()
     }
 
-    fun addInstrument(profile: Profile) {
-       storage.addInstrument(profile)
+    fun addInstrument(instrument: Instrument) {
+       storage.addInstrument(instrument)
     }
 
     fun removeInstrument(id: Int) {

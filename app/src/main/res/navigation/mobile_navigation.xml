@@ -26,6 +26,9 @@
             android:id="@+id/action_navigation_instruments_to_instrumentDetailsFragment"
             app:destination="@id/instrumentDetailsFragment"
             />
+        <action
+            android:id="@+id/action_navigation_instruments_to_additionInstrumentFragment"
+            app:destination="@id/additionInstrumentFragment" />
     </fragment>
     <fragment
         android:id="@+id/instrumentDetailsFragment"
@@ -36,4 +39,8 @@
             android:name="identification"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/additionInstrumentFragment"
+        android:name="com.boycodebyte.welderaks.ui.instruments.additioninstrument.AdditionInstrumentFragment"
+        android:label="AdditionInstrumentFragment" />
 </navigation>
