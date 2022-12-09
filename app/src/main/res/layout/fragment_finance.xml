@@ -1,32 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/basic_background"
-    tools:context=".ui.finance.FinanceFragment">
+    android:fillViewport="true">
 
-
-    <Spinner
-        android:id="@+id/spinner"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.053" />
+        tools:context=".ui.finance.FinanceFragment">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/pager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@color/basic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner">
+
+        </androidx.viewpager2.widget.ViewPager2>
+
+        <TextView
+            android:id="@+id/days_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Дней: "
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="@id/days"
+            app:layout_constraintEnd_toStartOf="@id/days"/>
+
+        <TextView
+            android:id="@+id/days"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.945"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pager"/>
+
+        <TextView
+            android:id="@+id/hours_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Часов: "
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="@id/hours"
+            app:layout_constraintEnd_toStartOf="@id/hours"/>
+
+        <TextView
+            android:id="@+id/hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.945"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/days"/>
+
+        <TextView
+            android:id="@+id/hourly_payment_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Заработано по часам: "
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="@id/hourly_payment"
+            app:layout_constraintEnd_toStartOf="@id/hourly_payment"/>
+
+        <TextView
+            android:id="@+id/hourly_payment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.945"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/hours"/>
+
+        <TextView
+            android:id="@+id/prepayment_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Аванс: "
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="@id/prepayment"
+            app:layout_constraintEnd_toStartOf="@id/prepayment"/>
+
+        <TextView
+            android:id="@+id/prepayment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="0"
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.945"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/hourly_payment"/>
+
+        <TextView
+            android:id="@+id/salary_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Зарплата: "
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="@id/salary"
+            app:layout_constraintEnd_toStartOf="@id/salary"/>
+
+        <TextView
+            android:id="@+id/salary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.945"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/prepayment"/>
+
+        <TextView
+            android:id="@+id/award_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Премия: "
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="@id/award"
+            app:layout_constraintEnd_toStartOf="@id/award"/>
+
+        <TextView
+            android:id="@+id/award"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.945"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/salary"/>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/pay_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:backgroundTint="@color/basic"
+            android:text="Аванс и Зарплата"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/salary"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

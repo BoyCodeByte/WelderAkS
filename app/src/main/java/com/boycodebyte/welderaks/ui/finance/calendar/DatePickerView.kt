@@ -14,9 +14,8 @@ import android.text.format.DateFormat
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import androidx.core.graphics.alpha
 import com.boycodebyte.welderaks.R
-import com.boycodebyte.welderaks.data.models.calendar.CalendarData
+import com.boycodebyte.welderaks.data.models.CalendarData
 import java.util.*
 import kotlin.math.min
 
@@ -84,18 +83,14 @@ class DatePickerView @JvmOverloads constructor(
     private var mToday = calendar.get(Calendar.DATE)
 
     private var mDaysInMonth = getDaysInMonth(month, year)
-    private var startDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+    private var startDayOfWeek = Calendar.MONDAY
 
-    private var mOnDayClickListener: OnDayClickListener? = null
+    var onDayClickListener: OnDayClickListener? = null
 
     private var mHighlightedDay = -1
     private var mIsTouchHighlighted = false
 
     init {
-        monthData.days.add(CalendarData.Day(1, 1))
-        monthData.days.add(CalendarData.Day(2, 5))
-        monthData.days.add(CalendarData.Day(3, 8))
-        monthData.days.add(CalendarData.Day(7, 12))
         updateMonthYearLabel()
         initPaints()
     }
@@ -309,14 +304,6 @@ class DatePickerView @JvmOverloads constructor(
         return day in 1..mDaysInMonth
     }
 
-    private fun isValidDayOfWeek(day: Int): Boolean {
-        return day >= Calendar.SUNDAY && day <= Calendar.SATURDAY
-    }
-
-    private fun isValidMonth(month: Int): Boolean {
-        return month >= Calendar.JANUARY && month <= Calendar.DECEMBER
-    }
-
     private fun findDayOffset(): Int {
         val offset = startDayOfWeek - Calendar.MONDAY
         return if (startDayOfWeek < Calendar.MONDAY) {
@@ -334,7 +321,6 @@ class DatePickerView @JvmOverloads constructor(
         if (paddedY < headerHeight || paddedY >= mPaddedHeight) {
             return -1
         }
-
         val row = (paddedY - headerHeight) / mDayHeight
         val col: Int = paddedX * DAYS_IN_WEEK / mPaddedWidth
         val index: Int = col + row * DAYS_IN_WEEK
@@ -349,10 +335,10 @@ class DatePickerView @JvmOverloads constructor(
             return false
         }
         mActivatedDay = day
-        if (mOnDayClickListener != null) {
+        if (onDayClickListener != null) {
             val date = Calendar.getInstance()
             date[year, month] = day
-            mOnDayClickListener!!.onDayClick(this, date)
+            onDayClickListener?.onDayClick(this, date)
         }
         return true
     }
@@ -362,14 +348,19 @@ class DatePickerView @JvmOverloads constructor(
         return year == today[Calendar.YEAR] && month == today[Calendar.MONTH] && day == today[Calendar.DAY_OF_MONTH]
     }
 
-    fun setMonthAndYear(month: Int, year: Int) {
+    fun setSelectedDay(dayOfMonth: Int) {
+        mActivatedDay = dayOfMonth
+        invalidate()
+    }
+
+    fun setMonthAndYear(month: Int, year: Int, data: CalendarData.Month) {
         this.month = month
         this.year = year
+        monthData = data
         calendar[Calendar.MONTH] = this.month
         calendar[Calendar.YEAR] = this.year
         calendar[Calendar.DAY_OF_MONTH] = 1
         startDayOfWeek = calendar[Calendar.DAY_OF_WEEK]
-
         val today = Calendar.getInstance()
         mToday = -1
         mDaysInMonth = getDaysInMonth(this.month, this.year)
@@ -395,7 +386,6 @@ class DatePickerView @JvmOverloads constructor(
                     invalidate()
                 }
                 if (action == MotionEvent.ACTION_DOWN && touchedItem < 0) {
-                    // Touch something that's not an item, reject event.
                     return false
                 }
             }
@@ -418,6 +408,6 @@ class DatePickerView @JvmOverloads constructor(
 
 
     interface OnDayClickListener {
-        fun onDayClick(view: DatePickerView?, day: Calendar?)
+        fun onDayClick(view: DatePickerView?, day: Calendar)
     }
 }

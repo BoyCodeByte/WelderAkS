@@ -16,8 +16,7 @@ import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.boycodebyte.welderaks.R
 import com.boycodebyte.welderaks.data.models.Instrument
 import com.boycodebyte.welderaks.databinding.FragmentInstrumentsBinding
-import com.boycodebyte.welderaks.ui.instruments.detailsinstrument.INSTRUMENT_KEY
-import com.boycodebyte.welderaks.ui.instruments.detailsinstrument.InstrumentDetailsViewModel
+
 import kotlin.concurrent.fixedRateTimer
 
 
@@ -26,10 +25,10 @@ class InstrumentsFragment : Fragment() {
     private var _binding: FragmentInstrumentsBinding? = null//old
     private lateinit var adapter: InstrumentRecyclerAdapter
     private lateinit var layoutManager: LayoutManager
-    private lateinit var instrumentsViewModel:InstrumentsViewModel
+    private lateinit var instrumentsViewModel: InstrumentsViewModel
 
 
-    private val binding get() = _binding!!//old
+    private val binding get() = _binding!!
 
 
     override fun onCreateView(
@@ -51,7 +50,9 @@ class InstrumentsFragment : Fragment() {
 
             override fun onInstrumentDetails(instrument: Instrument) {
                 println("tool:${instrument.id}")
-                val action=InstrumentsFragmentDirections.actionNavigationInstrumentsToInstrumentDetailsFragment(instrument.id)
+                val action = InstrumentsFragmentDirections.actionNavigationInstrumentsToInstrumentDetailsFragment(
+                        instrument.id
+                    )
                 view!!.findNavController().navigate(action)
             }
         })
@@ -62,8 +63,8 @@ class InstrumentsFragment : Fragment() {
             adapter.instruments = it
         }
 
-        instrumentsViewModel.profileLiveData.observe(viewLifecycleOwner){
-            adapter.users=it
+        instrumentsViewModel.profileLiveData.observe(viewLifecycleOwner) {
+            adapter.users = it
         }
 
         return root
@@ -82,7 +83,7 @@ class InstrumentsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        layoutManager=LinearLayoutManager(activity)
-        binding.recyclerView.layoutManager=layoutManager
+        layoutManager = LinearLayoutManager(activity)
+        binding.recyclerView.layoutManager = layoutManager
     }
 }
