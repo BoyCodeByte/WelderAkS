@@ -10,5 +10,6 @@
     <color name="basic">#FFE4BE72</color>
     <color name="basic_background">#FFFFFFFF</color>
     <color name="day_text_color">#FF000000</color>
-    <color name="day_select_color">#858282</color>
+    <color name="day_select_color">#FFFFFF00</color>
+    <color name="spinner_color">#00FF00</color>
 </resources>

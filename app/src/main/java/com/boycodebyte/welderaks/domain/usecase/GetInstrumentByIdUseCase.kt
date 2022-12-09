@@ -6,6 +6,6 @@ import com.boycodebyte.welderaks.data.repositories.InstrumentRepository
 
 class GetInstrumentByIdUseCase(private val repository: InstrumentRepository) {
     fun execute(id:Int):Instrument{
-        return repository.getInstrumentById(id)?: throw InstrumentRequestException()
+        return repository.getInstrumentById(id)
     }
 }

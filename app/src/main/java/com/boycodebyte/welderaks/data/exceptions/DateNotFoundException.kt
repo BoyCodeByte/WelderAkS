@@ -1,4 +1,4 @@
 package com.boycodebyte.welderaks.data.exceptions
 
-class DateNotFoundException:Exception() {
+class DateNotFoundException: Exception("Date not found") {
 }

@@ -6,6 +6,7 @@ import com.boycodebyte.welderaks.data.models.AccountType
 import com.boycodebyte.welderaks.data.models.Instrument
 import com.boycodebyte.welderaks.data.models.LoginUser
 import com.boycodebyte.welderaks.data.models.Profile
+import com.boycodebyte.welderaks.data.models.CalendarData
 import com.google.firebase.database.FirebaseDatabase
 
 
@@ -142,5 +143,9 @@ class FirebaseStorage {
     fun getInstrumentById(id: Int):Instrument{
         val instrument=getInstrumentsList().firstOrNull(){it.id==id}?:throw InstrumentRequestException()
         return instrument
+    }
+
+    fun getCalendarData(id: Int): CalendarData {
+        TODO("Not yet implemented")
     }
 }
