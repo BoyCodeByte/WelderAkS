@@ -14,13 +14,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.boycodebyte.welderaks.data.models.Instrument
 import com.boycodebyte.welderaks.data.models.Profile
 import com.boycodebyte.welderaks.data.models.getEmptyProfile
-
-
-import com.boycodebyte.welderaks.databinding.FragmentAdditionBinding
+import com.boycodebyte.welderaks.databinding.FragmentAdditionInstrumentBinding
 
 class AdditionInstrumentFragment:Fragment() {
 
-    private var _binding:FragmentAdditionBinding?=null
+    private var _binding:FragmentAdditionInstrumentBinding?=null
     private lateinit var additionInstrumentViewModel: AdditionInstrumentViewModel
     private lateinit var layout: RecyclerView.LayoutManager
 
@@ -38,7 +36,7 @@ class AdditionInstrumentFragment:Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding=FragmentAdditionBinding.inflate(inflater,container,false)
+        _binding=FragmentAdditionInstrumentBinding.inflate(inflater,container,false)
 
         val adapter = ArrayAdapter<Profile>(requireContext(), R.layout.simple_spinner_item)
         binding.spinnerAddInstrument.adapter=adapter

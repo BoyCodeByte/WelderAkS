@@ -148,4 +148,9 @@ class FirebaseStorage {
     fun getCalendarData(id: Int): CalendarData {
         TODO("Not yet implemented")
     }
+
+    fun getProfileById(id: Int):Profile{
+        val profile=getProfilesList().firstOrNull(){it.id==id}?:throw ProfileRequestException()
+        return profile
+    }
 }

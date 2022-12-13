@@ -5,15 +5,15 @@ fun getEmptyProfile():Profile{return Profile(0,"","","",""
 
 
 data class Profile(
-    val id: Int,
-    val login: String,
-    val password: String,
-    val name: String,
-    val surname: String,
-    val dateOfBirth: String,
-    val jobTitle: String,
-    val accountType: AccountType,
-    val phoneNumber: String
+    var id: Int,
+    var login: String,
+    var password: String,
+    var name: String,
+    var surname: String,
+    var dateOfBirth: String,
+    var jobTitle: String,
+    var accountType: AccountType,
+    var phoneNumber: String
 ){
     override fun toString(): String {
         return "$name $surname"
