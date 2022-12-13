@@ -36,7 +36,7 @@ class FinanceViewModel : ViewModel() {
     val profiles: LiveData<List<Profile>> = _profiles
 
     private val _calendarData = MutableLiveData<CalendarData>().apply {
-        value = initProbe()
+        value = getCalendarDataByIDUseCase.execute(1)
     }
     val calendarData: LiveData<CalendarData> = _calendarData
 

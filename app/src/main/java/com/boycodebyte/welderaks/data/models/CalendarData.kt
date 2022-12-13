@@ -18,6 +18,7 @@ class CalendarData {
     data class Day(
         var number: Int = 0,
         var hours: Int = 0,
+        var rate: Int = 0,
         var coefficient: Double = 1.0,
         var description: String = ""
     )
