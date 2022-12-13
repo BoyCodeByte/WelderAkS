@@ -9,7 +9,14 @@
         android:id="@+id/navigation_employers"
         android:name="com.boycodebyte.welderaks.ui.employers.EmployersFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_employers" />
+        tools:layout="@layout/fragment_employers" >
+        <action
+            android:id="@+id/action_navigation_employers_to_profileDetailsFragment"
+            app:destination="@id/profileDetailsFragment" />
+        <action
+            android:id="@+id/action_navigation_employers_to_additionProfileFragment"
+            app:destination="@id/additionProfileFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_finance"
@@ -26,6 +33,9 @@
             android:id="@+id/action_navigation_instruments_to_instrumentDetailsFragment"
             app:destination="@id/instrumentDetailsFragment"
             />
+        <action
+            android:id="@+id/action_navigation_instruments_to_additionInstrumentFragment"
+            app:destination="@id/additionInstrumentFragment" />
     </fragment>
     <fragment
         android:id="@+id/instrumentDetailsFragment"
@@ -36,4 +46,20 @@
             android:name="identification"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/additionInstrumentFragment"
+        android:name="com.boycodebyte.welderaks.ui.instruments.additioninstrument.AdditionInstrumentFragment"
+        android:label="AdditionInstrumentFragment" />
+    <fragment
+        android:id="@+id/profileDetailsFragment"
+        android:name="com.boycodebyte.welderaks.ui.employers.detailsprofile.ProfileDetailsFragment"
+        android:label="ProfileDetailsFragment" >
+        <argument
+            android:name="idProfile"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/additionProfileFragment"
+        android:name="com.boycodebyte.welderaks.ui.employers.additionprofile.AdditionProfileFragment"
+        android:label="AdditionProfileFragment" />
 </navigation>

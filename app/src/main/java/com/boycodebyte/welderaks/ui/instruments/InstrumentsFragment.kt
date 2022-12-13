@@ -4,31 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
-import com.boycodebyte.welderaks.R
 import com.boycodebyte.welderaks.data.models.Instrument
 import com.boycodebyte.welderaks.databinding.FragmentInstrumentsBinding
-
-import kotlin.concurrent.fixedRateTimer
 
 
 class InstrumentsFragment : Fragment() {
 
-    private var _binding: FragmentInstrumentsBinding? = null//old
+    private var _binding: FragmentInstrumentsBinding? = null
     private lateinit var adapter: InstrumentRecyclerAdapter
     private lateinit var layoutManager: LayoutManager
-    private lateinit var instrumentsViewModel: InstrumentsViewModel
+    private lateinit var instrumentsViewModel:InstrumentsViewModel
 
 
-    private val binding get() = _binding!!
+    private val binding get() = _binding!!//old
 
 
     override fun onCreateView(
@@ -50,9 +43,7 @@ class InstrumentsFragment : Fragment() {
 
             override fun onInstrumentDetails(instrument: Instrument) {
                 println("tool:${instrument.id}")
-                val action = InstrumentsFragmentDirections.actionNavigationInstrumentsToInstrumentDetailsFragment(
-                        instrument.id
-                    )
+                val action=InstrumentsFragmentDirections.actionNavigationInstrumentsToInstrumentDetailsFragment(instrument.id)
                 view!!.findNavController().navigate(action)
             }
         })
@@ -63,8 +54,14 @@ class InstrumentsFragment : Fragment() {
             adapter.instruments = it
         }
 
-        instrumentsViewModel.profileLiveData.observe(viewLifecycleOwner) {
-            adapter.users = it
+        instrumentsViewModel.profileLiveData.observe(viewLifecycleOwner){
+            adapter.users=it
+        }
+
+        binding.addInstrument.setOnClickListener {
+            val action=InstrumentsFragmentDirections.actionNavigationInstrumentsToAdditionInstrumentFragment()
+            it.findNavController().navigate(action)
+
         }
 
         return root
@@ -83,7 +80,7 @@ class InstrumentsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        layoutManager = LinearLayoutManager(activity)
-        binding.recyclerView.layoutManager = layoutManager
+        layoutManager=LinearLayoutManager(activity)
+        binding.recyclerView.layoutManager=layoutManager
     }
 }
