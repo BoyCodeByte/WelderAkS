@@ -13,4 +13,9 @@ class ProfileRepository(private val storage: FirebaseStorage) {
     fun removeProfile(id: Int){
         storage.removeProfile(id)
     }
+
+    fun getProfileById(id: Int):Profile{
+        val profile=storage.getProfileById(id)
+        return profile
+    }
 }

@@ -12,6 +12,7 @@ import com.google.firebase.database.FirebaseDatabase
 
 const val PROFILES_CHILD = "profiles"
 const val INSTRUMENTS_CHILD = "instruments"
+const val CALENDARS_CHILD = "calendars"
 
 //child of PROFILES_CHILD
 const val LOGIN_CHILD = "login"
@@ -26,6 +27,17 @@ const val PHONE_NUMBER_CHILD = "phone_number"
 //child of INSTRUMENTS_CHILD
 const val DESCRIPTION_CHILD = "description"
 const val ID_PROFILE_CHILD = "id_profile"
+
+//child of CALENDARS_CHILD
+const val YEARS_CHILD = "years"
+const val MONTHS_CHILD = "months"
+const val DAYS_CHILD = "days"
+const val PREPAYMENT_CHILD = "prepayment"
+const val SALARY_CHILD = "salary"
+const val AWARD_CHILD = "award"
+const val RATE_CHILD = "rate"
+const val COEFFICIENT_CHILD = "coefficient"
+const val HOURS_CHILD = "hours"
 
 
 
@@ -109,17 +121,18 @@ class FirebaseStorage {
         return instrumentList
     }
 
-    fun addInstrument(profile: Profile) {
+
+//    //////////////////////////////////////////////////////
+    fun addInstrument(instrument: Instrument) {
         val myRef = FirebaseDatabase.getInstance().reference
-        myRef.child(INSTRUMENTS_CHILD).child(profile.id.toString())
-            .updateChildren(
-                mapOf(
-                    NAME_CHILD to profile.name,
-                    SURNAME_CHILD to profile.surname,
-                    DATE_OF_BIRTH_CHILD to profile.dateOfBirth,
-                    JOB_TITLE_CHILD to profile.jobTitle,
-                )
+        myRef.child(INSTRUMENTS_CHILD).child(instrument.id.toString())
+        .updateChildren(
+            mapOf(
+                DESCRIPTION_CHILD to instrument.description,
+                ID_PROFILE_CHILD to instrument.idOfProfile,
+                NAME_CHILD to instrument.name
             )
+        )
     }
 
     fun removeInstrument(id: Int) {
@@ -127,8 +140,8 @@ class FirebaseStorage {
         myRef.child(INSTRUMENTS_CHILD).child(id.toString()).removeValue()
     }
 
-    fun upDateDetailsInstrument(instrument: Instrument){
-        val myRef=FirebaseDatabase.getInstance().reference
+    fun upDateDetailsInstrument(instrument: Instrument) {
+        val myRef = FirebaseDatabase.getInstance().reference
         myRef.child(INSTRUMENTS_CHILD).child(instrument.id.toString())
             .updateChildren(
                 mapOf(
@@ -139,12 +152,56 @@ class FirebaseStorage {
             )
     }
 
-    fun getInstrumentById(id: Int):Instrument{
-        val instrument=getInstrumentsList().firstOrNull(){it.id==id}?:throw InstrumentRequestException()
+    fun getInstrumentById(id: Int): Instrument {
+        val instrument =
+            getInstrumentsList().firstOrNull() { it.id == id } ?: throw InstrumentRequestException()
         return instrument
     }
 
     fun getCalendarData(id: Int): CalendarData {
-        TODO("Not yet implemented")
+        val data = CalendarData()
+        val myRef = FirebaseDatabase.getInstance().reference
+        val request = myRef.child(CALENDARS_CHILD).get()
+        while (!request.isComplete) {
+        }
+        if (request.isSuccessful) {
+            val yearsChild = request.result.child(id.toString()).child(YEARS_CHILD).children
+            for (yearChild in yearsChild) {
+                val year = CalendarData.Year(
+                    number = yearChild.key.toString().toInt()
+                )
+                val monthsChild = yearChild.child(MONTHS_CHILD).children
+                for (monthChild in monthsChild) {
+                    val month = CalendarData.Month(
+                        number = monthChild.key.toString().toInt(),
+                        prepayment = monthChild.child(PREPAYMENT_CHILD).value.toString().toInt(),
+                        salary = monthChild.child(SALARY_CHILD).value.toString().toInt(),
+                        award = monthChild.child(AWARD_CHILD).value.toString().toInt()
+                    )
+                    val daysChild = monthChild.child(DAYS_CHILD).children
+                    for (dayChild in daysChild) {
+                        val day = CalendarData.Day(
+                            number = dayChild.key.toString().toInt(),
+                            rate = dayChild.child(RATE_CHILD).value.toString().toInt(),
+                            coefficient = dayChild.child(COEFFICIENT_CHILD).value.toString()
+                                .toDouble(),
+                            hours = dayChild.child(HOURS_CHILD).value.toString().toInt(),
+                            description = dayChild.child(DESCRIPTION_CHILD).value.toString()
+                        )
+                        month.days.add(day)
+                    }
+                    year.months.add(month)
+                }
+                data.years.add(year)
+            }
+        } else {
+            throw InstrumentRequestException()
+        }
+        return data
+    }
+
+    fun getProfileById(id: Int):Profile{
+        val profile=getProfilesList().firstOrNull(){it.id==id}?:throw ProfileRequestException()
+        return profile
     }
 }
