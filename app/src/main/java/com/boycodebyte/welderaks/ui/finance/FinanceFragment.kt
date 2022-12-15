@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -34,11 +36,19 @@ class FinanceFragment : Fragment() {
 
         financeViewModel = ViewModelProvider(this)[FinanceViewModel::class.java]
 
-
         _binding = FragmentFinanceBinding.inflate(inflater, container, false)
 
         val profilesAdapter = ArrayAdapter<Profile>(requireContext(), R.layout.spinner_item)
         binding.spinner.adapter = profilesAdapter
+        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
+                val profile = parent.getItemAtPosition(pos) as Profile
+                financeViewModel.selectProfile(profile)
+            }
+            override fun onNothingSelected(parent: AdapterView<*>) {
+
+            }
+        }
 
         val calendarAdapter = CalendarAdapter(requireContext())
         calendarAdapter.setOnClickDayListener(object : OnDayClickListener{

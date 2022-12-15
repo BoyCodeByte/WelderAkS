@@ -56,6 +56,7 @@ class DatePickerView @JvmOverloads constructor(
     private val dayOfWeekPaint = TextPaint()
     private val dayPaint = TextPaint()
     private val hoursPaint = TextPaint()
+    private val coefficientPaint = TextPaint()
     private val workDayPaint = Paint()
     private val daySelectorPaint = Paint()
     private val dayHighlightPaint = Paint()
@@ -142,38 +143,60 @@ class DatePickerView @JvmOverloads constructor(
         val rowHeight: Int = mDayHeight
         val colWidth: Int = mCellWidth
 
-        val halfLineHeight = (textPaint.ascent() + textPaint.descent()) / 2f
+        val halfLineDayPaintHeight = (textPaint.ascent() + textPaint.descent()) / 2f
+        val halfLineHoursPaintHeight = (hoursPaint.ascent() + hoursPaint.descent()) / 2f
+        val halfLineCoefficientPaintHeight = (coefficientPaint.ascent() + coefficientPaint.descent()) / 2f
         var rowStart = headerHeight
         var rowCenter = headerHeight + rowHeight / 2
-        var rowAngle = headerHeight + rowHeight / 4
+        var rowLeftCorner = headerHeight + rowHeight / 10
+        var rowRightCorner = headerHeight + (rowHeight / 10 * 9)
         var day = 1
         var col: Int = findDayOffset()
+        var data: CalendarData.Day? = null
         while (day <= mDaysInMonth) {
             monthData.days.forEach {
                 if (it.number == day) {
-                    val colRect = Rect(
-                        (colWidth * col),
-                        (rowStart),
-                        (colWidth * col + colWidth),
-                        (rowStart + rowHeight)
-                    )
-                    val alpha = 255 / 12 * it.hours
-                    if (alpha > 255) {
-                        workDayPaint.alpha = 0x255
-                    } else {
-                        workDayPaint.alpha = alpha
-                    }
-                    canvas.drawRect(colRect, workDayPaint)
-                    val colAngle = colWidth * col + colWidth / 4
-                    canvas.drawText(
-                        it.hours.toString(),
-                        colAngle.toFloat(),
-                        rowAngle.toFloat(),
-                        hoursPaint
-                    )
+                    data = it
+                    println(data?.hours)
+                    println(data?.coefficient)
+                    println()
+                    return@forEach
                 }
             }
+            //Рисуем фон ячейки календаря в зависимости от колличества отработаных часов
+            if (data != null) {
+                val colRect = Rect(
+                    (colWidth * col),
+                    (rowStart),
+                    (colWidth * col + colWidth),
+                    (rowStart + rowHeight)
+                )
+                when {
+                    data?.hours in 1..7 -> {
+                        workDayPaint.color =
+                            res.getColor(R.color.bad_day_color, context.theme)
+                    }
+                    data?.hours == 8 -> {
+                        workDayPaint.color =
+                            res.getColor(R.color.normal_day_color, context.theme)
+                    }
+                    data?.hours in 9..10 -> {
+                        workDayPaint.color =
+                            res.getColor(R.color.good_day_color, context.theme)
+                    }
+                    data?.hours!! > 10 -> {
+                        workDayPaint.color =
+                            res.getColor(R.color.perfect_day_color, context.theme)
+                    }
+                    else -> {
+                        workDayPaint.color =
+                            res.getColor(R.color.no_work_day_color, context.theme)
+                    }
+                }
+                canvas.drawRect(colRect, workDayPaint)
+            }
 
+            //Рисуем выделение
             val colCenter = colWidth * col + colWidth / 2
             val isDayActivated = mActivatedDay == day
             val isDayHighlighted = mHighlightedDay == day
@@ -192,9 +215,11 @@ class DatePickerView @JvmOverloads constructor(
                     mDaySelectorRadius.toFloat(), dayHighlightPaint
                 )
             }
+
+            //Рисуем номер дня
             val isDayToday = mToday == day
             val dayTextColor: Int = if (isDayToday && !isDayActivated) {
-                daySelectorPaint.color
+                res.getColor(R.color.current_day_text_color, context.theme)
             } else {
                 res.getColor(R.color.day_text_color, context.theme)
             }
@@ -202,17 +227,38 @@ class DatePickerView @JvmOverloads constructor(
             canvas.drawText(
                 day.toString(),
                 colCenter.toFloat(),
-                rowCenter - halfLineHeight,
+                rowCenter - halfLineDayPaintHeight,
                 textPaint
             )
+
+            //Рисуем колличество часов
+            if (data != null) {
+                val columnLeftCorner = colWidth * col + colWidth / 10
+                val columnRightCorner = colWidth * col + (colWidth / 10 * 9)
+                canvas.drawText(
+                    data?.hours.toString(),
+                    columnLeftCorner.toFloat(),
+                    rowLeftCorner.toFloat() - halfLineHoursPaintHeight,
+                    hoursPaint
+                )
+                canvas.drawText(
+                    "x ${data?.coefficient.toString()}",
+                    columnRightCorner.toFloat(),
+                    rowRightCorner.toFloat() - halfLineHoursPaintHeight,
+                    coefficientPaint
+                )
+            }
+
+            data = null
+            day++
             col++
             if (col == DAYS_IN_WEEK) {
                 col = 0
                 rowCenter += rowHeight
                 rowStart += rowHeight
-                rowAngle += rowHeight
+                rowLeftCorner += rowHeight
+                rowRightCorner += rowHeight
             }
-            day++
         }
     }
 
@@ -262,6 +308,7 @@ class DatePickerView @JvmOverloads constructor(
         val dayOfWeekTextSize = res.getDimensionPixelSize(R.dimen.week_text_size)
         val dayTextSize = res.getDimensionPixelSize(R.dimen.day_text_size)
         val hoursTextSize = res.getDimensionPixelSize(R.dimen.hours_text_size)
+        val coefficientTextSize = res.getDimensionPixelSize(R.dimen.coefficient_text_size)
 
         monthPaint.isAntiAlias = true
         monthPaint.textSize = monthTextSize.toFloat()
@@ -287,8 +334,12 @@ class DatePickerView @JvmOverloads constructor(
         dayPaint.style = Paint.Style.FILL
         hoursPaint.isAntiAlias = true
         hoursPaint.textSize = hoursTextSize.toFloat()
-        hoursPaint.textAlign = Align.CENTER
+        hoursPaint.textAlign = Align.LEFT
         hoursPaint.style = Paint.Style.FILL
+        coefficientPaint.isAntiAlias = true
+        coefficientPaint.textSize = coefficientTextSize.toFloat()
+        coefficientPaint.textAlign = Align.RIGHT
+        coefficientPaint.style = Paint.Style.FILL
     }
 
     private fun updateMonthYearLabel() {

@@ -10,5 +10,6 @@
     <dimen name="month_text_size">20sp</dimen>
     <dimen name="week_text_size">20sp</dimen>
     <dimen name="day_text_size">20sp</dimen>
-    <dimen name="hours_text_size">10sp</dimen>
+    <dimen name="hours_text_size">8sp</dimen>
+    <dimen name="coefficient_text_size">8sp</dimen>
 </resources>

@@ -53,8 +53,15 @@ class FinanceViewModel : ViewModel() {
         _profiles.value = getProfilesUseCase.execute()
     }
 
-    private fun updateCalendarData(id: Int) {
-        _calendarData.value = getCalendarDataByIDUseCase.execute(id)
+    fun selectProfile(profile: Profile){
+        currentProfile = profile
+        updateCalendarData()
+    }
+
+    private fun updateCalendarData() {
+        if(currentProfile != null) {
+            _calendarData.value = getCalendarDataByIDUseCase.execute(currentProfile!!.id)
+        }
     }
 
     fun clickDay(selectedDate: Calendar) {
