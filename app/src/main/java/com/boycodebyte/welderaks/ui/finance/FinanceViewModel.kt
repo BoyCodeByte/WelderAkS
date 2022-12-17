@@ -17,7 +17,8 @@ import kotlin.math.ceil
 
 class FinanceViewModel : ViewModel() {
 
-    private var currentProfile: Profile? = null
+    private var selectedProfile: Profile? = null
+    private var selectedDate: Calendar = Calendar.getInstance()
 
     private val getCalendarDataByIDUseCase = GetCalendarDataByIDUseCase(
         CalendarDataRepository(
@@ -54,13 +55,19 @@ class FinanceViewModel : ViewModel() {
     }
 
     fun selectProfile(profile: Profile){
-        currentProfile = profile
+        selectedProfile = profile
         updateCalendarData()
+        updateMonth()
+    }
+
+    fun selectDate(date: Calendar){
+        selectedDate = date
+        updateMonth()
     }
 
     private fun updateCalendarData() {
-        if(currentProfile != null) {
-            _calendarData.value = getCalendarDataByIDUseCase.execute(currentProfile!!.id)
+        if(selectedProfile != null) {
+            _calendarData.value = getCalendarDataByIDUseCase.execute(selectedProfile!!.id)
         }
     }
 
@@ -69,25 +76,37 @@ class FinanceViewModel : ViewModel() {
         _calendarDialogState.value = CalendarDialogState(
             title = SimpleDateFormat("yyyy-MM-dd").format(selectedDate.time),
             hours = dataOfDay?.hours.toString(),
+            rate = selectedProfile?.rate.toString(),
             coefficient = dataOfDay?.coefficient.toString(),
-            //Баг
             description = dataOfDay?.description.toString()
         )
     }
-    
-    //Обновляет сводку за месяц
-    fun updateMonthlySummary(date: Calendar) {
+
+    fun setDayData(calendarDialogState: CalendarDialogState){
+
+    }
+
+    fun setMonthData(paymentState: PaymentState){
+
+    }
+
+    private fun updateMonth(){
         val data = calendarData.value
-        val year = data?.getYear(date.get(Calendar.YEAR)) ?: Year(date.get(Calendar.YEAR))
-        val month = year.getMonth(date.get(Calendar.MONTH) + 1)
+        val year = data?.getYear(selectedDate.get(Calendar.YEAR)) ?: Year(selectedDate.get(Calendar.YEAR))
+        val month = year.getMonth(selectedDate.get(Calendar.MONTH) + 1)
+        updateMonthlySummary(month)
+        updateMonthSalary(month)
+    }
+
+    //Обновляет сводку за месяц
+    private fun updateMonthlySummary(month: Month) {
         var days = 0;
         var hours = 0;
         var pay = 0.0;
         month.days.forEach {
             days++
             hours += it.hours
-            //add profile pay of hour
-            pay += it.hours * 100 * it.coefficient
+            pay += it.hours * it.rate * it.coefficient
         }
         _monthlySummaryState.value = MonthlySummaryState(
             days.toString(),
@@ -96,17 +115,12 @@ class FinanceViewModel : ViewModel() {
         )
     }
 
-    //Возвращет пробный экземпляр данных за год
-    private fun initProbe(): CalendarData {
-        var calData = CalendarData()
-        var yearData = Year(2023)
-        var monthData = Month(2)
-        monthData.days.add(Day(1, 1))
-        monthData.days.add(Day(2, 5))
-        monthData.days.add(Day(3, 8))
-        monthData.days.add(Day(7, 12))
-        yearData.months.add(monthData)
-        calData.years.add(yearData)
-        return calData
+    //Обновляет данные о зарплате
+    private fun updateMonthSalary(month: Month){
+        _paymentState.value = PaymentState(
+            prepayment = month.prepayment.toString(),
+            salary = month.salary.toString(),
+            award = month.award.toString()
+        )
     }
 }
