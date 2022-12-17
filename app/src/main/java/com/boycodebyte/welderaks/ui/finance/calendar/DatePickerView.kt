@@ -58,9 +58,7 @@ class DatePickerView @JvmOverloads constructor(
     private val hoursPaint = TextPaint()
     private val coefficientPaint = TextPaint()
     private val workDayPaint = Paint()
-    private val daySelectorPaint = Paint()
     private val dayHighlightPaint = Paint()
-    private val dayHighlightSelectorPaint = Paint()
 
     private var monthYearLabel: String = ""
 
@@ -123,17 +121,16 @@ class DatePickerView @JvmOverloads constructor(
     }
 
     private fun drawDaysOfWeek(canvas: Canvas) {
-        val paint: TextPaint = dayOfWeekPaint
         val headerHeight: Int = mMonthHeight
         val rowHeight: Int = mDayOfWeekHeight
         val colWidth: Int = mCellWidth
 
-        val halfLineHeight = (paint.ascent() + paint.descent()) / 2f
+        val halfLineHeight = (dayOfWeekPaint.ascent() + dayOfWeekPaint.descent()) / 2f
         val rowCenter = headerHeight + rowHeight / 2
         for (col in 0 until DAYS_IN_WEEK) {
             val colCenter = colWidth * col + colWidth / 2
             val label: String = dayOfWeekLabels[col]
-            canvas.drawText(label, colCenter.toFloat(), rowCenter - halfLineHeight, paint)
+            canvas.drawText(label, colCenter.toFloat(), rowCenter - halfLineHeight, dayOfWeekPaint)
         }
     }
 
@@ -145,7 +142,8 @@ class DatePickerView @JvmOverloads constructor(
 
         val halfLineDayPaintHeight = (textPaint.ascent() + textPaint.descent()) / 2f
         val halfLineHoursPaintHeight = (hoursPaint.ascent() + hoursPaint.descent()) / 2f
-        val halfLineCoefficientPaintHeight = (coefficientPaint.ascent() + coefficientPaint.descent()) / 2f
+        val halfLineCoefficientPaintHeight =
+            (coefficientPaint.ascent() + coefficientPaint.descent()) / 2f
         var rowStart = headerHeight
         var rowCenter = headerHeight + rowHeight / 2
         var rowLeftCorner = headerHeight + rowHeight / 10
@@ -157,9 +155,6 @@ class DatePickerView @JvmOverloads constructor(
             monthData.days.forEach {
                 if (it.number == day) {
                     data = it
-                    println(data?.hours)
-                    println(data?.coefficient)
-                    println()
                     return@forEach
                 }
             }
@@ -198,18 +193,8 @@ class DatePickerView @JvmOverloads constructor(
 
             //Рисуем выделение
             val colCenter = colWidth * col + colWidth / 2
-            val isDayActivated = mActivatedDay == day
             val isDayHighlighted = mHighlightedDay == day
-            if (isDayActivated) {
-                val paint: Paint =
-                    if (isDayHighlighted) dayHighlightSelectorPaint else daySelectorPaint
-                canvas.drawCircle(
-                    colCenter.toFloat(),
-                    rowCenter.toFloat(),
-                    mDaySelectorRadius.toFloat(),
-                    paint
-                )
-            } else if (isDayHighlighted) {
+            if (isDayHighlighted) {
                 canvas.drawCircle(
                     colCenter.toFloat(), rowCenter.toFloat(),
                     mDaySelectorRadius.toFloat(), dayHighlightPaint
@@ -218,12 +203,11 @@ class DatePickerView @JvmOverloads constructor(
 
             //Рисуем номер дня
             val isDayToday = mToday == day
-            val dayTextColor: Int = if (isDayToday && !isDayActivated) {
+            textPaint.color = if (isDayToday) {
                 res.getColor(R.color.current_day_text_color, context.theme)
             } else {
                 res.getColor(R.color.day_text_color, context.theme)
             }
-            textPaint.color = dayTextColor
             canvas.drawText(
                 day.toString(),
                 colCenter.toFloat(),
@@ -244,7 +228,7 @@ class DatePickerView @JvmOverloads constructor(
                 canvas.drawText(
                     "x ${data?.coefficient.toString()}",
                     columnRightCorner.toFloat(),
-                    rowRightCorner.toFloat() - halfLineHoursPaintHeight,
+                    rowRightCorner.toFloat() - halfLineCoefficientPaintHeight,
                     coefficientPaint
                 )
             }
@@ -283,8 +267,6 @@ class DatePickerView @JvmOverloads constructor(
         mPaddedWidth = paddedWidth
         mPaddedHeight = paddedHeight
 
-        // We may have been laid out smaller than our preferred size. If so,
-        // scale all dimensions to fit.
         val measuredPaddedHeight = measuredHeight - paddingTop - paddingBottom
         val scaleH = paddedHeight / measuredPaddedHeight.toFloat()
         val monthHeight = (mDesiredMonthHeight * scaleH).toInt()
@@ -318,16 +300,12 @@ class DatePickerView @JvmOverloads constructor(
         dayOfWeekPaint.textSize = dayOfWeekTextSize.toFloat()
         dayOfWeekPaint.textAlign = Align.CENTER
         dayOfWeekPaint.style = Paint.Style.FILL
-        daySelectorPaint.isAntiAlias = true
-        daySelectorPaint.style = Paint.Style.FILL
-        daySelectorPaint.color = res.getColor(R.color.basic, context.theme)
         dayHighlightPaint.isAntiAlias = true
         dayHighlightPaint.style = Paint.Style.FILL
+        dayHighlightPaint.color = res.getColor(R.color.basic, context.theme)
         workDayPaint.isAntiAlias = true
         workDayPaint.style = Paint.Style.FILL
         workDayPaint.color = Color.GREEN
-        dayHighlightSelectorPaint.isAntiAlias = true
-        dayHighlightSelectorPaint.style = Paint.Style.FILL
         dayPaint.isAntiAlias = true
         dayPaint.textSize = dayTextSize.toFloat()
         dayPaint.textAlign = Align.CENTER
@@ -443,7 +421,6 @@ class DatePickerView @JvmOverloads constructor(
             MotionEvent.ACTION_UP -> {
                 val clickedDay = getDayAtLocation(x, y)
                 onDayClicked(clickedDay)
-                // Reset touched day on stream end.
                 mHighlightedDay = -1
                 mIsTouchHighlighted = false
                 invalidate()

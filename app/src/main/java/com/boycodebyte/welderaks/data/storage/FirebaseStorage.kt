@@ -1,5 +1,6 @@
 package com.boycodebyte.welderaks.data.storage
 
+import android.icu.util.Calendar
 import com.boycodebyte.welderaks.data.exceptions.InstrumentRequestException
 import com.boycodebyte.welderaks.data.exceptions.ProfileRequestException
 import com.boycodebyte.welderaks.data.models.AccountType
@@ -122,17 +123,17 @@ class FirebaseStorage {
     }
 
 
-//    //////////////////////////////////////////////////////
+    //    //////////////////////////////////////////////////////
     fun addInstrument(instrument: Instrument) {
         val myRef = FirebaseDatabase.getInstance().reference
         myRef.child(INSTRUMENTS_CHILD).child(instrument.id.toString())
-        .updateChildren(
-            mapOf(
-                DESCRIPTION_CHILD to instrument.description,
-                ID_PROFILE_CHILD to instrument.idOfProfile,
-                NAME_CHILD to instrument.name
+            .updateChildren(
+                mapOf(
+                    DESCRIPTION_CHILD to instrument.description,
+                    ID_PROFILE_CHILD to instrument.idOfProfile,
+                    NAME_CHILD to instrument.name
+                )
             )
-        )
     }
 
     fun removeInstrument(id: Int) {
@@ -200,8 +201,29 @@ class FirebaseStorage {
         return data
     }
 
-    fun getProfileById(id: Int):Profile{
-        val profile=getProfilesList().firstOrNull(){it.id==id}?:throw ProfileRequestException()
+    fun getProfileById(id: Int): Profile {
+        val profile =
+            getProfilesList().firstOrNull() { it.id == id } ?: throw ProfileRequestException()
         return profile
+    }
+
+    fun setDayData(id: Int, date: Calendar, day: CalendarData.Day) {
+        val myRef = FirebaseDatabase.getInstance().reference
+        myRef.child(CALENDARS_CHILD).child(id.toString())
+            .child(YEARS_CHILD)
+            .child(date.get(Calendar.YEAR).toString())
+            .child(MONTHS_CHILD)
+            .child((date.get(Calendar.MONTH) +1).toString())
+            .child(DAYS_CHILD)
+            .child(date.get(Calendar.DATE).toString())
+            .updateChildren(
+                mapOf(
+                    DESCRIPTION_CHILD to day.description,
+                    RATE_CHILD to day.rate,
+                    HOURS_CHILD to day.hours,
+                    COEFFICIENT_CHILD to day.coefficient
+                )
+            )
+
     }
 }

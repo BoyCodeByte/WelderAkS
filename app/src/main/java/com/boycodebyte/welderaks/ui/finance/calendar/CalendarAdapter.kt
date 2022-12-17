@@ -13,7 +13,6 @@ class CalendarAdapter(
     private val context: Context
 ) : RecyclerView.Adapter<CalendarAdapter.DatePickerViewHolder>() {
 
-    private val selectedDay = Calendar.getInstance()
     private val mMinDate = Calendar.getInstance()
     private val mMaxDate = Calendar.getInstance()
     private var onDayClickListener: OnDayClickListener? = null
@@ -29,7 +28,6 @@ class CalendarAdapter(
         object : OnDayClickListener {
             override fun onDayClick(view: DatePickerView?, day: Calendar) {
                 if (day != null) {
-//                    setSelectedDay(day)
                     onDayClickListener?.onDayClick(view, day)
                 }
             }
@@ -56,7 +54,7 @@ class CalendarAdapter(
     }
 
     private fun getMonthData(position: Int): CalendarData.Month {
-        val calendar = getCurrentDate(position)
+        val calendar = getCurrentMonth(position)
         val year = calendarData.getYear(calendar.get(Calendar.YEAR))
         return year.getMonth(calendar.get(Calendar.MONTH) + 1)
     }
@@ -85,10 +83,10 @@ class CalendarAdapter(
         return yearOffset + mMinDate[Calendar.YEAR]
     }
 
-    fun getCurrentDate(position: Int): Calendar {
+    fun getCurrentMonth(position: Int): Calendar {
         val date = Calendar.getInstance()
-        date[Calendar.MONTH] = getMonthForPosition(position)
         date[Calendar.YEAR] = getYearForPosition(position)
+        date[Calendar.MONTH] = getMonthForPosition(position)
         date[Calendar.DAY_OF_MONTH] = 1
         return date
     }

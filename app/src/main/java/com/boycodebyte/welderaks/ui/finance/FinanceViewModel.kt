@@ -13,18 +13,27 @@ import com.boycodebyte.welderaks.data.repositories.ProfileRepository
 import com.boycodebyte.welderaks.data.storage.FirebaseStorage
 import com.boycodebyte.welderaks.domain.usecase.GetCalendarDataByIDUseCase
 import com.boycodebyte.welderaks.domain.usecase.GetProfilesUseCase
+import com.boycodebyte.welderaks.domain.usecase.SetDayDataByIDUseCase
 import kotlin.math.ceil
 
 class FinanceViewModel : ViewModel() {
 
     private var selectedProfile: Profile? = null
-    private var selectedDate: Calendar = Calendar.getInstance()
+    private var selectedMonth: Calendar = Calendar.getInstance()
+    private var selectedDay: Calendar = Calendar.getInstance()
 
     private val getCalendarDataByIDUseCase = GetCalendarDataByIDUseCase(
         CalendarDataRepository(
             FirebaseStorage()
         )
     )
+
+    private val setDayDataByIDUseCase = SetDayDataByIDUseCase(
+        CalendarDataRepository(
+            FirebaseStorage()
+        )
+    )
+
     private val getProfilesUseCase = GetProfilesUseCase(
         ProfileRepository(
             FirebaseStorage()
@@ -60,18 +69,20 @@ class FinanceViewModel : ViewModel() {
         updateMonth()
     }
 
-    fun selectDate(date: Calendar){
-        selectedDate = date
+    fun selectMonth(month: Calendar){
+        selectedMonth = month
         updateMonth()
     }
 
     private fun updateCalendarData() {
         if(selectedProfile != null) {
             _calendarData.value = getCalendarDataByIDUseCase.execute(selectedProfile!!.id)
+            updateMonth()
         }
     }
 
     fun clickDay(selectedDate: Calendar) {
+        selectedDay = selectedDate
         val dataOfDay = _calendarData.value?.getDataOfDay(selectedDate)
         _calendarDialogState.value = CalendarDialogState(
             title = SimpleDateFormat("yyyy-MM-dd").format(selectedDate.time),
@@ -82,8 +93,18 @@ class FinanceViewModel : ViewModel() {
         )
     }
 
-    fun setDayData(calendarDialogState: CalendarDialogState){
-
+    fun setDayData(state: CalendarDialogState){
+        val day = Day(
+            number = selectedDay.get(Calendar.DATE),
+            hours = state.hours.toInt(),
+            rate = state.rate.toInt(),
+            coefficient = state.coefficient.toDouble(),
+            description = state.description
+        )
+        if(selectedProfile != null) {
+            setDayDataByIDUseCase.execute(selectedProfile!!.id, selectedDay, day)
+            updateCalendarData()
+        }
     }
 
     fun setMonthData(paymentState: PaymentState){
@@ -92,8 +113,8 @@ class FinanceViewModel : ViewModel() {
 
     private fun updateMonth(){
         val data = calendarData.value
-        val year = data?.getYear(selectedDate.get(Calendar.YEAR)) ?: Year(selectedDate.get(Calendar.YEAR))
-        val month = year.getMonth(selectedDate.get(Calendar.MONTH) + 1)
+        val year = data?.getYear(selectedMonth.get(Calendar.YEAR)) ?: Year(selectedMonth.get(Calendar.YEAR))
+        val month = year.getMonth(selectedMonth.get(Calendar.MONTH) + 1)
         updateMonthlySummary(month)
         updateMonthSalary(month)
     }
