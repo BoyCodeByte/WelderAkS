@@ -15,6 +15,7 @@ class CalendarDialogFragment: DialogFragment() {
     var hours: String = ""
     var coefficient: String = ""
     var description: String = ""
+    var rate: String = ""
 
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -22,7 +23,7 @@ class CalendarDialogFragment: DialogFragment() {
         dialogBinding.editTextHours.setText(hours)
         dialogBinding.editTextCoefficient.setText(coefficient)
         dialogBinding.editTextDescription.setText(description)
-        println("create")
+        dialogBinding.editTextRate.setText(rate)
         return AlertDialog.Builder(requireContext())
             .setTitle(title)
             .setView(dialogBinding.root)
@@ -35,6 +36,7 @@ class CalendarDialogFragment: DialogFragment() {
         super.show(manager, tag)
         title = state.title
         hours = state.hours
+        rate = state.rate
         coefficient = state.coefficient
         description = state.description
     }

@@ -61,7 +61,7 @@ class FinanceFragment : Fragment() {
         binding.pager.registerOnPageChangeCallback(object : OnPageChangeCallback(){
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                financeViewModel.updateMonthlySummary(calendarAdapter.getCurrentDate(position))
+                financeViewModel.selectDate(calendarAdapter.getCurrentDate(position))
             }
         })
 

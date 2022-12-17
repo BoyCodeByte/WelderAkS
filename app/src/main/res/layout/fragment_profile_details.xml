@@ -144,6 +144,7 @@
         android:id="@+id/update_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/basic"
         android:text="Обновить"
         app:layout_constraintStart_toEndOf="@id/guideline7"
         app:layout_constraintEnd_toStartOf="@id/guideline8"

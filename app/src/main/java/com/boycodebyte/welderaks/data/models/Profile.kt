@@ -1,7 +1,7 @@
 package com.boycodebyte.welderaks.data.models
 
 fun getEmptyProfile():Profile{return Profile(0,"","","",""
-    ,"","",AccountType.WORKER,"")}
+    ,"","",0,AccountType.WORKER,"")}
 
 
 data class Profile(
@@ -12,6 +12,7 @@ data class Profile(
     var surname: String,
     var dateOfBirth: String,
     var jobTitle: String,
+    var rate: Int = 0,
     var accountType: AccountType,
     var phoneNumber: String
 ){

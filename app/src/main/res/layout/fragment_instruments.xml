@@ -16,6 +16,7 @@
             android:id="@+id/add_instrument"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/basic"
             android:text="@string/add_instrument"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
