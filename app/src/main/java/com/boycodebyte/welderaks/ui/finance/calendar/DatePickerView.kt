@@ -231,7 +231,7 @@ class DatePickerView @JvmOverloads constructor(
                 textPaint
             )
 
-            //Рисуем колличество часов
+            //Рисуем колличество часов и коэффициент
             if (data != null) {
                 val columnLeftCorner = colWidth * col + colWidth / 10
                 val columnRightCorner = colWidth * col + (colWidth / 10 * 9)
@@ -320,7 +320,7 @@ class DatePickerView @JvmOverloads constructor(
         dayOfWeekPaint.style = Paint.Style.FILL
         daySelectorPaint.isAntiAlias = true
         daySelectorPaint.style = Paint.Style.FILL
-        daySelectorPaint.color = res.getColor(R.color.day_select_color, context.theme)
+        daySelectorPaint.color = res.getColor(R.color.basic, context.theme)
         dayHighlightPaint.isAntiAlias = true
         dayHighlightPaint.style = Paint.Style.FILL
         workDayPaint.isAntiAlias = true
