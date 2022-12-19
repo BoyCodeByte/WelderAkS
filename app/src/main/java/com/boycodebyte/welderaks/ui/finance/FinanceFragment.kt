@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.boycodebyte.welderaks.R
 import com.boycodebyte.welderaks.data.models.Profile
-import com.boycodebyte.welderaks.data.storage.FirebaseStorage
 import com.boycodebyte.welderaks.databinding.FragmentFinanceBinding
 import com.boycodebyte.welderaks.ui.finance.calendar.CalendarAdapter
 import com.boycodebyte.welderaks.ui.finance.calendar.DatePickerView
@@ -20,8 +19,6 @@ import com.boycodebyte.welderaks.ui.finance.calendar.DatePickerView.OnDayClickLi
 
 
 class FinanceFragment : Fragment() {
-
-    val storage = FirebaseStorage()
 
     private var _binding: FragmentFinanceBinding? = null
     private val binding get() = _binding!!
@@ -73,7 +70,7 @@ class FinanceFragment : Fragment() {
             calendarAdapter.calendarData = it
         }
 
-        financeViewModel.calendarDialogState.observe(viewLifecycleOwner) {
+        financeViewModel.dayDialogState.observe(viewLifecycleOwner) {
             showCalendarDialog(it)
         }
 
@@ -86,7 +83,9 @@ class FinanceFragment : Fragment() {
         }
 
         binding.payButton.setOnClickListener {
+            val dialog = PayDialogFragment()
 
+            dialog.show(childFragmentManager, DayDialogFragment.TAG)
         }
 
         return binding.root
@@ -101,10 +100,10 @@ class FinanceFragment : Fragment() {
         _binding = null
     }
 
-    private fun showCalendarDialog(state: CalendarDialogState) {
-        val dialog = CalendarDialogFragment()
+    private fun showCalendarDialog(state: DayDialogState) {
+        val dialog = DayDialogFragment()
         dialog.listener = { financeViewModel.setDayData(it) }
-        dialog.show(childFragmentManager, CalendarDialogFragment.TAG, state)
+        dialog.show(childFragmentManager, DayDialogFragment.TAG, state)
     }
 
     private fun updateMonthlySummary(state: MonthlySummaryState) {

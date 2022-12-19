@@ -176,7 +176,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:backgroundTint="@color/basic"
-            android:text="Аванс и Зарплата"
+            android:text="Выплаты"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/salary"

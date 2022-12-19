@@ -7,11 +7,11 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.boycodebyte.welderaks.databinding.CalendarDialogBinding
 
-typealias DialogListener =(state: CalendarDialogState) -> Unit
+typealias DialogListener =(state: DayDialogState) -> Unit
 
-class CalendarDialogFragment: DialogFragment() {
+class DayDialogFragment: DialogFragment() {
 
-    private var state: CalendarDialogState = CalendarDialogState()
+    private var state: DayDialogState = DayDialogState()
     var listener: DialogListener = { }
 
 
@@ -26,7 +26,7 @@ class CalendarDialogFragment: DialogFragment() {
             .setView(dialogBinding.root)
             .setPositiveButton("Ок") {_,_ ->
                 listener.invoke(
-                    CalendarDialogState(
+                    DayDialogState(
                         hours = dialogBinding.editTextHours.text.toString(),
                         rate = dialogBinding.editTextRate.text.toString(),
                         coefficient = dialogBinding.editTextCoefficient.text.toString(),
@@ -39,7 +39,7 @@ class CalendarDialogFragment: DialogFragment() {
             .create()
     }
 
-    fun show(manager: FragmentManager, tag: String, state: CalendarDialogState) {
+    fun show(manager: FragmentManager, tag: String, state: DayDialogState) {
         super.show(manager, tag)
         this.state = state
     }

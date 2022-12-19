@@ -50,8 +50,8 @@ class FinanceViewModel : ViewModel() {
     }
     val calendarData: LiveData<CalendarData> = _calendarData
 
-    private val _calendarDialogState = MutableLiveData<CalendarDialogState>()
-    val calendarDialogState: LiveData<CalendarDialogState> = _calendarDialogState
+    private val _dayDialogState = MutableLiveData<DayDialogState>()
+    val dayDialogState: LiveData<DayDialogState> = _dayDialogState
 
     private val _monthlySummaryState = MutableLiveData<MonthlySummaryState>()
     val monthlySummaryState: LiveData<MonthlySummaryState> = _monthlySummaryState
@@ -84,7 +84,7 @@ class FinanceViewModel : ViewModel() {
     fun clickDay(selectedDate: Calendar) {
         selectedDay = selectedDate
         val dataOfDay = _calendarData.value?.getDataOfDay(selectedDate)
-        _calendarDialogState.value = CalendarDialogState(
+        _dayDialogState.value = DayDialogState(
             title = SimpleDateFormat("yyyy-MM-dd").format(selectedDate.time),
             hours = dataOfDay?.hours.toString(),
             rate = selectedProfile?.rate.toString(),
@@ -93,7 +93,7 @@ class FinanceViewModel : ViewModel() {
         )
     }
 
-    fun setDayData(state: CalendarDialogState){
+    fun setDayData(state: DayDialogState){
         val day = Day(
             number = selectedDay.get(Calendar.DATE),
             hours = state.hours.toInt(),

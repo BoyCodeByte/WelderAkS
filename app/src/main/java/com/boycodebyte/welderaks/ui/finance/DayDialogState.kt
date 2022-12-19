@@ -1,6 +1,6 @@
 package com.boycodebyte.welderaks.ui.finance
 
-data class CalendarDialogState(
+data class DayDialogState(
     var title: String = "",
     var hours: String = "",
     var rate: String = "",

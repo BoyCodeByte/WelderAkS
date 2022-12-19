@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/text_prepayment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Аванс"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/edit_prepayment"
+        app:layout_constraintStart_toStartOf="@+id/edit_prepayment" />
+
+    <EditText
+        android:id="@+id/edit_prepayment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberSigned"
+        app:layout_constraintBottom_toTopOf="@+id/edit_salary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.144"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_prepayment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/basic"
+        android:text="Выдать"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_prepayment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/edit_prepayment" />
+
+    <TextView
+        android:id="@+id/text_salary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Зарплата"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/edit_salary"
+        app:layout_constraintStart_toStartOf="@+id/edit_salary" />
+
+    <EditText
+        android:id="@+id/edit_salary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:inputType="numberSigned"
+        app:layout_constraintBottom_toTopOf="@+id/edit_award"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.144"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_prepayment" />
+
+    <TextView
+        android:id="@+id/text_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/edit_salary"
+        app:layout_constraintTop_toBottomOf="@+id/edit_salary" />
+
+    <Button
+        android:id="@+id/button_salary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/basic"
+        android:text="Выдать"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_salary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/edit_salary" />
+
+    <TextView
+        android:id="@+id/text_award"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Премия"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/edit_award"
+        app:layout_constraintStart_toStartOf="@+id/edit_award" />
+
+    <EditText
+        android:id="@+id/edit_award"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:inputType="numberSigned"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.144"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_salary" />
+
+    <Button
+        android:id="@+id/button_award"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/basic"
+        android:text="Выдать"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_award"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/edit_award" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
