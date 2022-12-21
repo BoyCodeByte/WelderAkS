@@ -50,12 +50,6 @@ class FinanceViewModel : ViewModel() {
     }
     val calendarData: LiveData<CalendarData> = _calendarData
 
-    private val _dayDialogState = MutableLiveData<DayDialogState>()
-    val dayDialogState: LiveData<DayDialogState> = _dayDialogState
-
-    private val _payDialogState = MutableLiveData<PayDialogState>()
-    val payDialogState: LiveData<PayDialogState> = _payDialogState
-
     private val _monthlySummaryState = MutableLiveData<MonthlySummaryState>()
     val monthlySummaryState: LiveData<MonthlySummaryState> = _monthlySummaryState
 
@@ -84,7 +78,7 @@ class FinanceViewModel : ViewModel() {
         }
     }
 
-    fun clickDay(selectedDate: Calendar) {
+    fun clickDay(selectedDate: Calendar): DayDialogState {
         selectedDay = selectedDate
         val dataOfDay = _calendarData.value?.getDataOfDay(selectedDate)
 
@@ -92,20 +86,21 @@ class FinanceViewModel : ViewModel() {
         if (rate == "0") {
             rate = selectedProfile?.rate.toString()
         }
-        _dayDialogState.value = DayDialogState(
+        val state = DayDialogState(
             title = SimpleDateFormat("yyyy-MM-dd").format(selectedDate.time),
             hours = dataOfDay?.hours.toString(),
             rate = rate,
             coefficient = dataOfDay?.coefficient.toString(),
             description = dataOfDay?.description.toString()
         )
+        return state
     }
 
-    fun clickPay() {
+    fun clickPay(): PayDialogState? {
         if (selectedProfile != null) {
             val month = _calendarData.value?.getDataOfMonth(selectedMonth)
             val hourlyPayment = monthlySummaryState.value?.hourlyPayment ?: "0"
-            _payDialogState.value = PayDialogState(
+            val state = PayDialogState(
                 PaymentState(
                     prepayment = month?.prepayment.toString(),
                     salary = month?.salary.toString(),
@@ -115,7 +110,9 @@ class FinanceViewModel : ViewModel() {
                 selectedProfile!!.id,
                 hourlyPayment.toInt()
             )
+            return state
         }
+        return null
     }
 
     fun setDayData(state: DayDialogState) {

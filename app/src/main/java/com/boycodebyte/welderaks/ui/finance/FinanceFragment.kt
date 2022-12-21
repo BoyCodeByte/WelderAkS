@@ -50,7 +50,8 @@ class FinanceFragment : Fragment() {
         val calendarAdapter = CalendarAdapter(requireContext())
         calendarAdapter.setOnClickDayListener(object : OnDayClickListener {
             override fun onDayClick(view: DatePickerView?, day: Calendar) {
-                financeViewModel.clickDay(day)
+                val state = financeViewModel.clickDay(day)
+                showCalendarDialog(state)
             }
         })
 
@@ -70,14 +71,6 @@ class FinanceFragment : Fragment() {
             calendarAdapter.calendarData = it
         }
 
-        financeViewModel.dayDialogState.observe(viewLifecycleOwner) {
-            showCalendarDialog(it)
-        }
-
-        financeViewModel.payDialogState.observe(viewLifecycleOwner) {
-            showPayDialog(it)
-        }
-
         financeViewModel.monthlySummaryState.observe(viewLifecycleOwner) {
             updateMonthlySummary(it)
         }
@@ -87,7 +80,10 @@ class FinanceFragment : Fragment() {
         }
 
         binding.payButton.setOnClickListener {
-            financeViewModel.clickPay()
+            val state = financeViewModel.clickPay()
+            if(state != null) {
+                showPayDialog(state)
+            }
         }
 
         return binding.root
@@ -100,6 +96,7 @@ class FinanceFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+
     }
 
     private fun showCalendarDialog(state: DayDialogState) {
