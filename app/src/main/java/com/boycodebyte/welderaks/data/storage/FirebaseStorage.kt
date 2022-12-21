@@ -174,11 +174,23 @@ class FirebaseStorage {
                 val monthsChild = yearChild.child(MONTHS_CHILD).children
                 for (monthChild in monthsChild) {
                     val month = CalendarData.Month(
-                        number = monthChild.key.toString().toInt(),
-                        prepayment = monthChild.child(PREPAYMENT_CHILD).value.toString().toInt(),
-                        salary = monthChild.child(SALARY_CHILD).value.toString().toInt(),
-                        award = monthChild.child(AWARD_CHILD).value.toString().toInt()
+                        number = monthChild.key.toString().toInt()
                     )
+                    month.prepayment = try {
+                        monthChild.child(PREPAYMENT_CHILD).value.toString().toInt()
+                    } catch (_: Exception) {
+                        0
+                    }
+                    month.salary = try {
+                        monthChild.child(SALARY_CHILD).value.toString().toInt()
+                    } catch (_: Exception) {
+                        0
+                    }
+                    month.award = try {
+                        monthChild.child(AWARD_CHILD).value.toString().toInt()
+                    } catch (_: Exception) {
+                        0
+                    }
                     val daysChild = monthChild.child(DAYS_CHILD).children
                     for (dayChild in daysChild) {
                         val day = CalendarData.Day(
@@ -213,7 +225,7 @@ class FirebaseStorage {
             .child(YEARS_CHILD)
             .child(date.get(Calendar.YEAR).toString())
             .child(MONTHS_CHILD)
-            .child((date.get(Calendar.MONTH) +1).toString())
+            .child((date.get(Calendar.MONTH) + 1).toString())
             .child(DAYS_CHILD)
             .child(date.get(Calendar.DATE).toString())
             .updateChildren(
@@ -225,5 +237,33 @@ class FirebaseStorage {
                 )
             )
 
+    }
+
+    fun setPrepaymentData(id: Int, date: Calendar, prepayment: Int) {
+        val myRef = FirebaseDatabase.getInstance().reference
+        myRef.child(CALENDARS_CHILD).child(id.toString())
+            .child(YEARS_CHILD)
+            .child(date.get(Calendar.YEAR).toString())
+            .child(MONTHS_CHILD)
+            .child((date.get(Calendar.MONTH) + 1).toString())
+            .child(PREPAYMENT_CHILD).setValue(prepayment)
+    }
+    fun setSalaryData(id: Int, date: Calendar, salary: Int) {
+        val myRef = FirebaseDatabase.getInstance().reference
+        myRef.child(CALENDARS_CHILD).child(id.toString())
+            .child(YEARS_CHILD)
+            .child(date.get(Calendar.YEAR).toString())
+            .child(MONTHS_CHILD)
+            .child((date.get(Calendar.MONTH) + 1).toString())
+            .child(SALARY_CHILD).setValue(salary)
+    }
+    fun setAwardData(id: Int, date: Calendar, award: Int) {
+        val myRef = FirebaseDatabase.getInstance().reference
+        myRef.child(CALENDARS_CHILD).child(id.toString())
+            .child(YEARS_CHILD)
+            .child(date.get(Calendar.YEAR).toString())
+            .child(MONTHS_CHILD)
+            .child((date.get(Calendar.MONTH) + 1).toString())
+            .child(AWARD_CHILD).setValue(award)
     }
 }

@@ -11,11 +11,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.boycodebyte.welderaks.R
+import com.boycodebyte.welderaks.data.models.CalendarData
 import com.boycodebyte.welderaks.data.models.Profile
 import com.boycodebyte.welderaks.databinding.FragmentFinanceBinding
 import com.boycodebyte.welderaks.ui.finance.calendar.CalendarAdapter
 import com.boycodebyte.welderaks.ui.finance.calendar.DatePickerView
 import com.boycodebyte.welderaks.ui.finance.calendar.DatePickerView.OnDayClickListener
+import java.time.Month
 
 
 class FinanceFragment : Fragment() {
@@ -74,6 +76,10 @@ class FinanceFragment : Fragment() {
             showCalendarDialog(it)
         }
 
+        financeViewModel.payDialogState.observe(viewLifecycleOwner) {
+            showPayDialog(it)
+        }
+
         financeViewModel.monthlySummaryState.observe(viewLifecycleOwner) {
             updateMonthlySummary(it)
         }
@@ -83,9 +89,7 @@ class FinanceFragment : Fragment() {
         }
 
         binding.payButton.setOnClickListener {
-            val dialog = PayDialogFragment()
-
-            dialog.show(childFragmentManager, DayDialogFragment.TAG)
+            financeViewModel.clickPay()
         }
 
         return binding.root
@@ -104,6 +108,11 @@ class FinanceFragment : Fragment() {
         val dialog = DayDialogFragment()
         dialog.listener = { financeViewModel.setDayData(it) }
         dialog.show(childFragmentManager, DayDialogFragment.TAG, state)
+    }
+
+    private fun showPayDialog(state: PayDialogState) {
+        val dialog = PayDialogFragment(state)
+        dialog.show(childFragmentManager, DayDialogFragment.TAG)
     }
 
     private fun updateMonthlySummary(state: MonthlySummaryState) {

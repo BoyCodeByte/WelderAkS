@@ -12,4 +12,16 @@ class CalendarDataRepository(private val storage: FirebaseStorage) {
     fun setDayData(id: Int, date: Calendar, day: CalendarData.Day) {
         storage.setDayData(id, date, day)
     }
+
+    fun setPrepaymentData(id: Int, date: Calendar, prepayment: Int) {
+        storage.setPrepaymentData(id, date, prepayment)
+    }
+
+    fun setSalaryData(id: Int, date: Calendar, salary: Int) {
+        storage.setSalaryData(id, date, salary)
+    }
+
+    fun setAwardData(id: Int, date: Calendar, award: Int) {
+        storage.setAwardData(id, date, award)
+    }
 }

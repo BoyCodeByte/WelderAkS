@@ -93,6 +93,10 @@ class FinanceViewModel : ViewModel() {
         )
     }
 
+    fun clickPay() {
+
+    }
+
     fun setDayData(state: DayDialogState){
         val day = Day(
             number = selectedDay.get(Calendar.DATE),
