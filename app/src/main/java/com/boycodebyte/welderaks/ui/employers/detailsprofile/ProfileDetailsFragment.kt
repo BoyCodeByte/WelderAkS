@@ -1,9 +1,14 @@
 package com.boycodebyte.welderaks.ui.employers.detailsprofile
 
+import android.R
+import android.content.res.Resources.Theme
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -37,23 +42,54 @@ class ProfileDetailsFragment: Fragment() {
 
         val amount=args.idProfile
 
+        val adapter = ArrayAdapter<String>(requireContext(), R.layout.simple_spinner_item)
+        binding.spinnerAccountType.adapter=adapter
+
+
+        profileDetailsViewModel.accountType.observe(viewLifecycleOwner){list->
+            adapter.clear()
+            adapter.addAll(list)
+        }
+
         profileDetailsViewModel.profile.observe(viewLifecycleOwner,{
             binding.profileNameEdit.setText(it.name)
             binding.profileSurnameEdit.setText(it.surname)
             binding.profileBirthdateEdit.setText(it.dateOfBirth)
             binding.profileJobTitleEdit.setText(it.jobTitle)
             binding.profilePhoneNumberEdit.setText(it.phoneNumber)
+
+            var account: String=it.accountType.toString()
+            var position:Int=0
+            when(account){
+                "GENERAL"->position
+                "MASTER"->position=1
+                "WORKER"->position=2
+            }
+            binding.spinnerAccountType.setSelection(position)
+            binding.rateEdit.setText(it.rate.toString())///????????????????????
+            binding.profileLoginEdit.setText(it.login)
+            binding.profilePasswordEdit.setText(it.password)
         })
 
         profileDetailsViewModel.loadProfile(amount)
 
         binding.updateProfile.setOnClickListener {
+            if(binding.rateEdit.text.length!=0){
             profileDetailsViewModel.saveChange(binding.profileNameEdit.text.toString(),
             binding.profileSurnameEdit.text.toString(),
             binding.profileBirthdateEdit.text.toString(),
             binding.profileJobTitleEdit.text.toString(),
-            binding.profilePhoneNumberEdit.text.toString())
+            binding.profilePhoneNumberEdit.text.toString(),
+            binding.rateEdit.text.toString().toInt(),
+            binding.profileLoginEdit.text.toString(),
+            binding.profilePasswordEdit.text.toString(),
+            binding.spinnerAccountType.selectedItem.toString())
             findNavController().popBackStack()
+            }else {
+                val toast=Toast.makeText(requireContext(),"Заполните поле: ${binding.rateText.text}",Toast.LENGTH_SHORT)
+                toast.show()
+                binding.rateEdit.background.setTint(resources.getColor(R.color.holo_red_light,resources.newTheme()))
+                return@setOnClickListener}
         }
 
         return binding.root

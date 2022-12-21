@@ -28,7 +28,7 @@ class AdditionProfileViewModel: ViewModel() {
     }
 
     fun add(name:String, surname:String, accountType: String, dateOfBirth:String,
-        jobTitle:String, login:String, password:String, phoneNumber:String){
+        jobTitle:String, login:String, password:String, phoneNumber:String,rate: Int){
 
         println(accountType)
         val profile= getEmptyProfile()
@@ -44,6 +44,7 @@ class AdditionProfileViewModel: ViewModel() {
         profile.login=login
         profile.password=password
         profile.phoneNumber=phoneNumber
+        profile.rate=rate
         additionProfileUseCase.execute(profile)
     }
 }
