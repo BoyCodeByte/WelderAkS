@@ -44,7 +44,7 @@ class AdditionProfileFragment: Fragment() {
             adapter.clear()
             adapter.addAll(list)
         }
-
+        binding.spinnerAccountType.setSelection(2)
 
         binding.addProfile.setOnClickListener {
             if (binding.rateEdit.text.length!=0){

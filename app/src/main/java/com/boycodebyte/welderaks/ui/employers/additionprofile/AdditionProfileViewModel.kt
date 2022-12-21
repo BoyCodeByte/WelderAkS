@@ -14,16 +14,15 @@ class AdditionProfileViewModel: ViewModel() {
 
     private val additionProfileUseCase=AdditionProfileUseCase(ProfileRepository(FirebaseStorage()))
 
-    private var type:List<String>
+    private var type:List<String> = ArrayList<String>().apply {
+        add(AccountType.GENERAL.toString())
+        add(AccountType.MASTER.toString())
+        add(AccountType.WORKER.toString())
+    }
     private val _accountType= MutableLiveData<List<String>>()
     val accountType:LiveData<List<String>> = _accountType
 
     init {
-        type=ArrayList<String>().apply {
-            add(AccountType.GENERAL.toString())
-            add(AccountType.MASTER.toString())
-            add(AccountType.WORKER.toString())
-        }
         _accountType.value=type
     }
 

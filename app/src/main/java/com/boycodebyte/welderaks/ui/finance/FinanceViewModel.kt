@@ -53,6 +53,9 @@ class FinanceViewModel : ViewModel() {
     private val _dayDialogState = MutableLiveData<DayDialogState>()
     val dayDialogState: LiveData<DayDialogState> = _dayDialogState
 
+    private val _payDialogState = MutableLiveData<PayDialogState>()
+    val payDialogState: LiveData<PayDialogState> = _payDialogState
+
     private val _monthlySummaryState = MutableLiveData<MonthlySummaryState>()
     val monthlySummaryState: LiveData<MonthlySummaryState> = _monthlySummaryState
 
@@ -63,19 +66,19 @@ class FinanceViewModel : ViewModel() {
         _profiles.value = getProfilesUseCase.execute()
     }
 
-    fun selectProfile(profile: Profile){
+    fun selectProfile(profile: Profile) {
         selectedProfile = profile
         updateCalendarData()
         updateMonth()
     }
 
-    fun selectMonth(month: Calendar){
+    fun selectMonth(month: Calendar) {
         selectedMonth = month
         updateMonth()
     }
 
-    private fun updateCalendarData() {
-        if(selectedProfile != null) {
+    fun updateCalendarData() {
+        if (selectedProfile != null) {
             _calendarData.value = getCalendarDataByIDUseCase.execute(selectedProfile!!.id)
             updateMonth()
         }
@@ -84,20 +87,38 @@ class FinanceViewModel : ViewModel() {
     fun clickDay(selectedDate: Calendar) {
         selectedDay = selectedDate
         val dataOfDay = _calendarData.value?.getDataOfDay(selectedDate)
+
+        var rate = dataOfDay?.rate.toString()
+        if (rate == "0") {
+            rate = selectedProfile?.rate.toString()
+        }
         _dayDialogState.value = DayDialogState(
             title = SimpleDateFormat("yyyy-MM-dd").format(selectedDate.time),
             hours = dataOfDay?.hours.toString(),
-            rate = selectedProfile?.rate.toString(),
+            rate = rate,
             coefficient = dataOfDay?.coefficient.toString(),
             description = dataOfDay?.description.toString()
         )
     }
 
     fun clickPay() {
-
+        if (selectedProfile != null) {
+            val month = _calendarData.value?.getDataOfMonth(selectedMonth)
+            val hourlyPayment = monthlySummaryState.value?.hourlyPayment ?: "0"
+            _payDialogState.value = PayDialogState(
+                PaymentState(
+                    prepayment = month?.prepayment.toString(),
+                    salary = month?.salary.toString(),
+                    award = month?.award.toString(),
+                ),
+                selectedMonth,
+                selectedProfile!!.id,
+                hourlyPayment.toInt()
+            )
+        }
     }
 
-    fun setDayData(state: DayDialogState){
+    fun setDayData(state: DayDialogState) {
         val day = Day(
             number = selectedDay.get(Calendar.DATE),
             hours = state.hours.toInt(),
@@ -105,19 +126,19 @@ class FinanceViewModel : ViewModel() {
             coefficient = state.coefficient.toDouble(),
             description = state.description
         )
-        if(selectedProfile != null) {
+        if (selectedProfile != null) {
             setDayDataByIDUseCase.execute(selectedProfile!!.id, selectedDay, day)
             updateCalendarData()
         }
     }
 
-    fun setMonthData(paymentState: PaymentState){
-
-    }
-
-    private fun updateMonth(){
+    private fun updateMonth() {
         val data = calendarData.value
-        val year = data?.getYear(selectedMonth.get(Calendar.YEAR)) ?: Year(selectedMonth.get(Calendar.YEAR))
+        val year = data?.getYear(selectedMonth.get(Calendar.YEAR)) ?: Year(
+            selectedMonth.get(
+                Calendar.YEAR
+            )
+        )
         val month = year.getMonth(selectedMonth.get(Calendar.MONTH) + 1)
         updateMonthlySummary(month)
         updateMonthSalary(month)
@@ -141,7 +162,7 @@ class FinanceViewModel : ViewModel() {
     }
 
     //Обновляет данные о зарплате
-    private fun updateMonthSalary(month: Month){
+    private fun updateMonthSalary(month: Month) {
         _paymentState.value = PaymentState(
             prepayment = month.prepayment.toString(),
             salary = month.salary.toString(),

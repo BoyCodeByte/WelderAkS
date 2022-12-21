@@ -125,7 +125,6 @@ class FirebaseStorage {
     }
 
 
-    //    //////////////////////////////////////////////////////
     fun addInstrument(instrument: Instrument) {
         val myRef = FirebaseDatabase.getInstance().reference
         myRef.child(INSTRUMENTS_CHILD).child(instrument.id.toString())
@@ -156,9 +155,8 @@ class FirebaseStorage {
     }
 
     fun getInstrumentById(id: Int): Instrument {
-        val instrument =
-            getInstrumentsList().firstOrNull() { it.id == id } ?: throw InstrumentRequestException()
-        return instrument
+        return getInstrumentsList().firstOrNull() { it.id == id }
+            ?: throw InstrumentRequestException()
     }
 
     fun getCalendarData(id: Int): CalendarData {
@@ -250,6 +248,7 @@ class FirebaseStorage {
             .child((date.get(Calendar.MONTH) + 1).toString())
             .child(PREPAYMENT_CHILD).setValue(prepayment)
     }
+
     fun setSalaryData(id: Int, date: Calendar, salary: Int) {
         val myRef = FirebaseDatabase.getInstance().reference
         myRef.child(CALENDARS_CHILD).child(id.toString())
@@ -259,6 +258,7 @@ class FirebaseStorage {
             .child((date.get(Calendar.MONTH) + 1).toString())
             .child(SALARY_CHILD).setValue(salary)
     }
+
     fun setAwardData(id: Int, date: Calendar, award: Int) {
         val myRef = FirebaseDatabase.getInstance().reference
         myRef.child(CALENDARS_CHILD).child(id.toString())
