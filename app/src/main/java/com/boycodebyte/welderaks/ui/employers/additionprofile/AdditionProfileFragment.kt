@@ -1,11 +1,13 @@
 package com.boycodebyte.welderaks.ui.employers.additionprofile
 
 import android.R
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -45,11 +47,20 @@ class AdditionProfileFragment: Fragment() {
 
 
         binding.addProfile.setOnClickListener {
+            if (binding.rateEdit.text.length!=0){
             additionProfileViewModel.add(binding.profileNameEdit.text.toString(),binding.profileSurnameEdit.text.toString(),
             binding.spinnerAccountType.selectedItem.toString(),binding.profileBirthdateEdit.text.toString(),
             binding.profileJobTitleEdit.text.toString(),binding.profileLoginEdit.text.toString(),
-                binding.profilePasswordEdit.text.toString(),binding.profilePhoneNumberEdit.text.toString())
+                binding.profilePasswordEdit.text.toString(),binding.profilePhoneNumberEdit.text.toString(),
+                binding.rateEdit.text.toString().toInt())
             findNavController().popBackStack()
+            }else{
+                val toast= Toast.makeText(requireContext(),"Заполните поле: ${binding.rateText.text}",
+                    Toast.LENGTH_SHORT)
+                toast.show()
+                binding.rateEdit.background.setTint(resources.getColor(R.color.holo_red_light,resources.newTheme()))
+                return@setOnClickListener
+            }
         }
 
         return binding.root

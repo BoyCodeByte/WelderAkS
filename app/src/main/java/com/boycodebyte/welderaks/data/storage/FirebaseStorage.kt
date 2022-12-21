@@ -67,7 +67,8 @@ class FirebaseStorage {
                     dateOfBirth = userChild.child(DATE_OF_BIRTH_CHILD).value.toString(),
                     jobTitle = userChild.child(JOB_TITLE_CHILD).value.toString(),
                     accountType = AccountType.valueOf(userChild.child(ACCOUNT_TYPE_CHILD).value.toString()),
-                    phoneNumber = userChild.child(PHONE_NUMBER_CHILD).value.toString()
+                    phoneNumber = userChild.child(PHONE_NUMBER_CHILD).value.toString(),
+                    rate = userChild.child(RATE_CHILD).value.toString().toInt()
                 )
                 profilesList.add(profile)
             }
@@ -90,6 +91,7 @@ class FirebaseStorage {
                     JOB_TITLE_CHILD to profile.jobTitle,
                     ACCOUNT_TYPE_CHILD to profile.accountType.name,
                     PHONE_NUMBER_CHILD to profile.phoneNumber,
+                    RATE_CHILD to profile.rate
                 )
             )
     }
