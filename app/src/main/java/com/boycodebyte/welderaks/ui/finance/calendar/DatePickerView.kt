@@ -135,12 +135,11 @@ class DatePickerView @JvmOverloads constructor(
     }
 
     private fun drawDays(canvas: Canvas) {
-        val textPaint: TextPaint = dayPaint
         val headerHeight: Int = mMonthHeight + mDayOfWeekHeight
         val rowHeight: Int = mDayHeight
         val colWidth: Int = mCellWidth
 
-        val halfLineDayPaintHeight = (textPaint.ascent() + textPaint.descent()) / 2f
+        val halfLineDayPaintHeight = (dayPaint.ascent() + dayPaint.descent()) / 2f
         val halfLineHoursPaintHeight = (hoursPaint.ascent() + hoursPaint.descent()) / 2f
         val halfLineCoefficientPaintHeight =
             (coefficientPaint.ascent() + coefficientPaint.descent()) / 2f
@@ -158,7 +157,7 @@ class DatePickerView @JvmOverloads constructor(
                     return@forEach
                 }
             }
-            //Рисуем фон ячейки календаря в зависимости от колличества отработаных часов
+            //Рисуем фон ячейки календаря в зависимости от коэффициента
             if (data != null) {
                 val colRect = Rect(
                     (colWidth * col),
@@ -167,19 +166,19 @@ class DatePickerView @JvmOverloads constructor(
                     (rowStart + rowHeight)
                 )
                 when {
-                    data?.hours in 1..7 -> {
+                    data?.coefficient!! in 0.1..0.9 -> {
                         workDayPaint.color =
                             res.getColor(R.color.bad_day_color, context.theme)
                     }
-                    data?.hours == 8 -> {
+                    data?.coefficient!! == 1.0 -> {
                         workDayPaint.color =
                             res.getColor(R.color.normal_day_color, context.theme)
                     }
-                    data?.hours in 9..10 -> {
+                    data?.coefficient!! in 1.1..1.5 -> {
                         workDayPaint.color =
                             res.getColor(R.color.good_day_color, context.theme)
                     }
-                    data?.hours!! > 10 -> {
+                    data?.coefficient!! > 1.5 -> {
                         workDayPaint.color =
                             res.getColor(R.color.perfect_day_color, context.theme)
                     }
@@ -203,7 +202,7 @@ class DatePickerView @JvmOverloads constructor(
 
             //Рисуем номер дня
             val isDayToday = mToday == day
-            textPaint.color = if (isDayToday) {
+            dayPaint.color = if (isDayToday) {
                 res.getColor(R.color.current_day_text_color, context.theme)
             } else {
                 res.getColor(R.color.day_text_color, context.theme)
@@ -212,7 +211,7 @@ class DatePickerView @JvmOverloads constructor(
                 day.toString(),
                 colCenter.toFloat(),
                 rowCenter - halfLineDayPaintHeight,
-                textPaint
+                dayPaint
             )
 
             //Рисуем колличество часов и коэффициент

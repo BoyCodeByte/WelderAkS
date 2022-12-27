@@ -13,9 +13,9 @@
     <color name="current_day_text_color">#A58C8C</color>
     <color name="day_select_color">#FFFFFF00</color>
     <color name="no_work_day_color">#FFFFFFFF</color>
-    <color name="bad_day_color">#FFC3FFAE</color>
-    <color name="normal_day_color">#FF90F57B</color>
-    <color name="good_day_color">#FF24900C</color>
-    <color name="perfect_day_color">#FF005C00</color>
+    <color name="bad_day_color">#74ADAD</color>
+    <color name="normal_day_color">#FF63AFD0</color>
+    <color name="good_day_color">#FFFFC000</color>
+    <color name="perfect_day_color">#FFFF5900</color>
     <color name="spinner_color">#00FF00</color>
 </resources>
