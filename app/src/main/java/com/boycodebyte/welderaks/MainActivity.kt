@@ -32,14 +32,9 @@ class MainActivity : AppCompatActivity(){
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         navView.setupWithNavController(navController)
 
-        Thread{
-            val myRef = FirebaseDatabase.getInstance().reference
-            val res = myRef.get()
-            while (!res.isComplete){}
-            if(res.isSuccessful){
-                res.result.children.forEach{ println(it.key)}
-            }
-        }.start()
+    }
+
+    fun logout(){
 
     }
 

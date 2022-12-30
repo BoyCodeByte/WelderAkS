@@ -214,9 +214,7 @@ class FirebaseStorage {
     }
 
     fun getProfileById(id: Int): Profile {
-        val profile =
-            getProfilesList().firstOrNull() { it.id == id } ?: throw ProfileRequestException()
-        return profile
+        return getProfilesList().firstOrNull{ it.id == id } ?: throw ProfileRequestException()
     }
 
     fun setDayData(id: Int, date: Calendar, day: CalendarData.Day) {

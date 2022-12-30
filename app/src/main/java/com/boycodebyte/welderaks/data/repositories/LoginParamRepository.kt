@@ -12,4 +12,8 @@ class LoginParamRepository(private val storage: PrefStorage) {
     fun saveLoginParam(param: LoginParam) {
         storage.saveLoginParam(param)
     }
+
+    fun removeLoginParam(){
+        storage.removeLoginParam()
+    }
 }

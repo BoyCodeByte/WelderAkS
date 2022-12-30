@@ -21,7 +21,7 @@ class InstrumentsFragment : Fragment() {
     private lateinit var instrumentsViewModel:InstrumentsViewModel
 
 
-    private val binding get() = _binding!!//old
+    private val binding get() = _binding!!
 
 
     override fun onCreateView(
@@ -61,7 +61,6 @@ class InstrumentsFragment : Fragment() {
         binding.addInstrument.setOnClickListener {
             val action=InstrumentsFragmentDirections.actionNavigationInstrumentsToAdditionInstrumentFragment()
             it.findNavController().navigate(action)
-
         }
 
         return root

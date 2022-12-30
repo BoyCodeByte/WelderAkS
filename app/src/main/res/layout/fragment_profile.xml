@@ -23,6 +23,7 @@
         android:layout_marginStart="15dp"
         android:text="Имя: "
         android:textSize="20sp"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView_profile" />
 
@@ -34,6 +35,7 @@
         android:layout_marginStart="15dp"
         android:text="Фамилия: "
         android:textSize="20sp"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_name" />
 
@@ -45,6 +47,7 @@
         android:layout_marginStart="15dp"
         android:text="Дата рождения: "
         android:textSize="20sp"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_surname" />
 
@@ -56,6 +59,7 @@
         android:layout_marginStart="15dp"
         android:text="Профессия: "
         android:textSize="20sp"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_dateOfBirth" />
 
@@ -67,6 +71,7 @@
         android:layout_marginStart="15dp"
         android:text="Почасовая ставка: "
         android:textSize="20sp"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_jobTitle" />
 
@@ -74,11 +79,12 @@
         android:id="@+id/button_logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Выйти"
         android:backgroundTint="@color/basic"
+        android:text="Выйти"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintHorizontal_bias="0.854"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_rate" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_rate"
+        app:layout_constraintVertical_bias="0.835" />
 </androidx.constraintlayout.widget.ConstraintLayout>

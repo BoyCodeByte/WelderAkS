@@ -29,11 +29,10 @@ class FinanceFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         financeViewModel = ViewModelProvider(this)[FinanceViewModel::class.java]
 
         _binding = FragmentFinanceBinding.inflate(inflater, container, false)
-
+        calendarVisible(false)
         val profilesAdapter = ArrayAdapter<Profile>(requireContext(), R.layout.spinner_item)
         binding.spinner.adapter = profilesAdapter
         binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -64,8 +63,13 @@ class FinanceFragment : Fragment() {
         })
 
         financeViewModel.profiles.observe(viewLifecycleOwner) {
-            profilesAdapter.clear()
-            profilesAdapter.addAll(it)
+            if(it.isEmpty()){
+                calendarVisible(false)
+            }else{
+                calendarVisible(true)
+                profilesAdapter.clear()
+                profilesAdapter.addAll(it)
+            }
         }
         financeViewModel.calendarData.observe(viewLifecycleOwner) {
             calendarAdapter.calendarData = it
@@ -91,6 +95,7 @@ class FinanceFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        financeViewModel.update()
     }
 
     override fun onDestroyView() {
@@ -121,5 +126,43 @@ class FinanceFragment : Fragment() {
         binding.prepayment.text = state.prepayment
         binding.salary.text = state.salary
         binding.award.text = state.award
+    }
+
+    private fun calendarVisible(isVisible: Boolean){
+        if(isVisible){
+            binding.spinner.visibility = View.VISIBLE
+            binding.pager.visibility = View.VISIBLE
+            binding.hours.visibility = View.VISIBLE
+            binding.hoursLabel.visibility = View.VISIBLE
+            binding.days.visibility = View.VISIBLE
+            binding.daysLabel.visibility = View.VISIBLE
+            binding.hourlyPayment.visibility = View.VISIBLE
+            binding.hourlyPaymentLabel.visibility = View.VISIBLE
+            binding.prepayment.visibility = View.VISIBLE
+            binding.prepaymentLabel.visibility = View.VISIBLE
+            binding.salary.visibility = View.VISIBLE
+            binding.salaryLabel.visibility = View.VISIBLE
+            binding.award.visibility = View.VISIBLE
+            binding.awardLabel.visibility = View.VISIBLE
+            binding.payButton.visibility = View.VISIBLE
+            binding.noDataLabel.visibility = View.GONE
+        }else{
+            binding.spinner.visibility = View.GONE
+            binding.pager.visibility = View.GONE
+            binding.hours.visibility = View.GONE
+            binding.hoursLabel.visibility = View.GONE
+            binding.days.visibility = View.GONE
+            binding.daysLabel.visibility = View.GONE
+            binding.hourlyPayment.visibility = View.GONE
+            binding.hourlyPaymentLabel.visibility = View.GONE
+            binding.prepayment.visibility = View.GONE
+            binding.prepaymentLabel.visibility = View.GONE
+            binding.salary.visibility = View.GONE
+            binding.salaryLabel.visibility = View.GONE
+            binding.award.visibility = View.GONE
+            binding.awardLabel.visibility = View.GONE
+            binding.payButton.visibility = View.GONE
+            binding.noDataLabel.visibility = View.VISIBLE
+        }
     }
 }

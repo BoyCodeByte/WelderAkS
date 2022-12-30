@@ -5,6 +5,7 @@ import android.icu.util.Calendar
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.boycodebyte.welderaks.data.models.AccountType
 import com.boycodebyte.welderaks.data.models.Profile
 import com.boycodebyte.welderaks.data.models.CalendarData
 import com.boycodebyte.welderaks.data.models.CalendarData.*
@@ -13,6 +14,7 @@ import com.boycodebyte.welderaks.data.repositories.ProfileRepository
 import com.boycodebyte.welderaks.data.storage.FirebaseStorage
 import com.boycodebyte.welderaks.domain.usecase.GetCalendarDataByIDUseCase
 import com.boycodebyte.welderaks.domain.usecase.GetProfilesUseCase
+import com.boycodebyte.welderaks.domain.usecase.GetProfilesWithoutGeneralUseCase
 import com.boycodebyte.welderaks.domain.usecase.SetDayDataByIDUseCase
 import kotlin.math.ceil
 
@@ -34,20 +36,16 @@ class FinanceViewModel : ViewModel() {
         )
     )
 
-    private val getProfilesUseCase = GetProfilesUseCase(
+    private val getProfilesUseCase = GetProfilesWithoutGeneralUseCase(
         ProfileRepository(
             FirebaseStorage()
         )
     )
 
-    private val _profiles = MutableLiveData<List<Profile>>().apply {
-        value = getProfilesUseCase.execute()
-    }
+    private val _profiles = MutableLiveData<List<Profile>>()
     val profiles: LiveData<List<Profile>> = _profiles
 
-    private val _calendarData = MutableLiveData<CalendarData>().apply {
-        value = getCalendarDataByIDUseCase.execute(1)
-    }
+    private val _calendarData = MutableLiveData<CalendarData>()
     val calendarData: LiveData<CalendarData> = _calendarData
 
     private val _monthlySummaryState = MutableLiveData<MonthlySummaryState>()
@@ -55,10 +53,6 @@ class FinanceViewModel : ViewModel() {
 
     private val _paymentState = MutableLiveData<PaymentState>()
     val paymentState: LiveData<PaymentState> = _paymentState
-
-    private fun updateProfiles() {
-        _profiles.value = getProfilesUseCase.execute()
-    }
 
     fun selectProfile(profile: Profile) {
         selectedProfile = profile
@@ -165,5 +159,9 @@ class FinanceViewModel : ViewModel() {
             salary = month.salary.toString(),
             award = month.award.toString()
         )
+    }
+
+    fun update() {
+        _profiles.value = getProfilesUseCase.execute()
     }
 }

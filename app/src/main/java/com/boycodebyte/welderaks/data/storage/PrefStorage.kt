@@ -29,4 +29,11 @@ class PrefStorage(private val context: Context) {
         sharedPreferences.edit().putString(LOGIN_PARAM, param.login).apply()
         sharedPreferences.edit().putString(PASSWORD_PARAM, param.password).apply()
     }
+
+    fun removeLoginParam(){
+        val sharedPreferences =
+            context.getSharedPreferences(AUTH_PREF, Context.MODE_PRIVATE)?: throw LoginParamException()
+        sharedPreferences.edit().remove(LOGIN_PARAM).apply()
+        sharedPreferences.edit().remove(PASSWORD_PARAM).apply()
+    }
 }
