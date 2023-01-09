@@ -14,6 +14,7 @@ import androidx.lifecycle.get
 import com.boycodebyte.welderaks.MainActivity
 import com.boycodebyte.welderaks.databinding.FragmentProfileBinding
 import com.boycodebyte.welderaks.getProfile
+import com.boycodebyte.welderaks.removeProfile
 import com.boycodebyte.welderaks.ui.login.LoginActivity
 
 class ProfileFragment : Fragment() {
@@ -53,10 +54,11 @@ class ProfileFragment : Fragment() {
         return binding.root
     }
 
-    fun logout() {
+    private fun logout() {
         viewModel.logout(requireContext())
         val intent = Intent(requireContext(), LoginActivity::class.java)
         startActivity(intent)
+        activity?.removeProfile()
         activity?.finish()
     }
 

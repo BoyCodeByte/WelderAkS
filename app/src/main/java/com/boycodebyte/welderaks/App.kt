@@ -16,3 +16,7 @@ fun Activity.setProfile(profile: Profile){
     val app = application as App
     app.profile = profile
 }
+fun Activity.removeProfile(){
+    val app = application as App
+    app.profile = null
+}
