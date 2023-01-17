@@ -23,6 +23,7 @@ class FinanceFragment : Fragment() {
     private var _binding: FragmentFinanceBinding? = null
     private val binding get() = _binding!!
     private lateinit var financeViewModel: FinanceViewModel
+    private lateinit var calendarAdapter: CalendarAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,8 +46,7 @@ class FinanceFragment : Fragment() {
 
             }
         }
-
-        val calendarAdapter = CalendarAdapter(requireContext())
+        calendarAdapter = CalendarAdapter(requireContext())
         calendarAdapter.setOnClickDayListener(object : OnDayClickListener {
             override fun onDayClick(view: DatePickerView?, day: Calendar) {
                 val state = financeViewModel.clickDay(day)
@@ -63,9 +63,9 @@ class FinanceFragment : Fragment() {
         })
 
         financeViewModel.profiles.observe(viewLifecycleOwner) {
-            if(it.isEmpty()){
+            if (it.isEmpty()) {
                 calendarVisible(false)
-            }else{
+            } else {
                 calendarVisible(true)
                 profilesAdapter.clear()
                 profilesAdapter.addAll(it)
@@ -84,10 +84,7 @@ class FinanceFragment : Fragment() {
         }
 
         binding.payButton.setOnClickListener {
-            val state = financeViewModel.clickPay()
-            if(state != null) {
-                showPayDialog(state)
-            }
+
         }
 
         return binding.root
@@ -96,6 +93,12 @@ class FinanceFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         financeViewModel.update()
+        binding.pager.setCurrentItem(
+            calendarAdapter.getDiffMonths(
+                Calendar.getInstance(),
+                calendarAdapter.mMinDate
+            ), false
+        )
     }
 
     override fun onDestroyView() {
@@ -112,7 +115,7 @@ class FinanceFragment : Fragment() {
 
     private fun showPayDialog(state: PayDialogState) {
         val dialog = PayDialogFragment(state)
-        dialog.listener = {financeViewModel.updateCalendarData()}
+        dialog.listener = { financeViewModel.updateCalendarData() }
         dialog.show(childFragmentManager, DayDialogFragment.TAG)
     }
 
@@ -128,8 +131,8 @@ class FinanceFragment : Fragment() {
         binding.award.text = state.award
     }
 
-    private fun calendarVisible(isVisible: Boolean){
-        if(isVisible){
+    private fun calendarVisible(isVisible: Boolean) {
+        if (isVisible) {
             binding.spinner.visibility = View.VISIBLE
             binding.pager.visibility = View.VISIBLE
             binding.hours.visibility = View.VISIBLE
@@ -146,7 +149,7 @@ class FinanceFragment : Fragment() {
             binding.awardLabel.visibility = View.VISIBLE
             binding.payButton.visibility = View.VISIBLE
             binding.noDataLabel.visibility = View.GONE
-        }else{
+        } else {
             binding.spinner.visibility = View.GONE
             binding.pager.visibility = View.GONE
             binding.hours.visibility = View.GONE

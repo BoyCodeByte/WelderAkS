@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.boycodebyte.welderaks.R
+import com.boycodebyte.welderaks.data.models.AccountType
 import com.boycodebyte.welderaks.data.models.Profile
 import com.boycodebyte.welderaks.databinding.EmployersItemBinding
 
@@ -54,6 +55,9 @@ class ProfileRecyclerAdapter(private val actionListeners: ProfileActionListeners
         val profile = users[position]
         with(holder.binding){
             holder.itemView.tag = profile
+            if(profile.accountType == AccountType.GENERAL){
+                deleteImageButton.visibility = View.GONE
+            }
             deleteImageButton.tag = profile
             deleteImageButton.setImageResource(R.drawable.delete)
             employerNameTextView.text="${profile.name} ${profile.surname}"
