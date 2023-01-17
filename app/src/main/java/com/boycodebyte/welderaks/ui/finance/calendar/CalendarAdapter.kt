@@ -34,7 +34,7 @@ class CalendarAdapter(
         }
 
     init {
-        count = getDiffMonths(mMaxDate,mMinDate)
+        count = getDiffMonths(mMaxDate,mMinDate) + 1
         notifyDataSetChanged()
     }
 
