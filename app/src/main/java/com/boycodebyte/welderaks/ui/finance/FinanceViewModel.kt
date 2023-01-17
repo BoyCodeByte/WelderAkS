@@ -5,7 +5,6 @@ import android.icu.util.Calendar
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.boycodebyte.welderaks.data.models.AccountType
 import com.boycodebyte.welderaks.data.models.Profile
 import com.boycodebyte.welderaks.data.models.CalendarData
 import com.boycodebyte.welderaks.data.models.CalendarData.*
@@ -13,7 +12,6 @@ import com.boycodebyte.welderaks.data.repositories.CalendarDataRepository
 import com.boycodebyte.welderaks.data.repositories.ProfileRepository
 import com.boycodebyte.welderaks.data.storage.FirebaseStorage
 import com.boycodebyte.welderaks.domain.usecase.GetCalendarDataByIDUseCase
-import com.boycodebyte.welderaks.domain.usecase.GetProfilesUseCase
 import com.boycodebyte.welderaks.domain.usecase.GetProfilesWithoutGeneralUseCase
 import com.boycodebyte.welderaks.domain.usecase.SetDayDataByIDUseCase
 import kotlin.math.ceil
@@ -80,21 +78,20 @@ class FinanceViewModel : ViewModel() {
         if (rate == "0") {
             rate = selectedProfile?.rate.toString()
         }
-        val state = DayDialogState(
+        return DayDialogState(
             title = SimpleDateFormat("yyyy-MM-dd").format(selectedDate.time),
             hours = dataOfDay?.hours.toString(),
             rate = rate,
             coefficient = dataOfDay?.coefficient.toString(),
             description = dataOfDay?.description.toString()
         )
-        return state
     }
 
     fun clickPay(): PayDialogState? {
         if (selectedProfile != null) {
             val month = _calendarData.value?.getDataOfMonth(selectedMonth)
             val hourlyPayment = monthlySummaryState.value?.hourlyPayment ?: "0"
-            val state = PayDialogState(
+            return PayDialogState(
                 PaymentState(
                     prepayment = month?.prepayment.toString(),
                     salary = month?.salary.toString(),
@@ -104,7 +101,6 @@ class FinanceViewModel : ViewModel() {
                 selectedProfile!!.id,
                 hourlyPayment.toInt()
             )
-            return state
         }
         return null
     }

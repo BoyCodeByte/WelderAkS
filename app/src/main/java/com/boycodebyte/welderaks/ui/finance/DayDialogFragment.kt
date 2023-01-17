@@ -7,9 +7,9 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.boycodebyte.welderaks.databinding.CalendarDialogBinding
 
-typealias DialogListener =(state: DayDialogState) -> Unit
+typealias DialogListener = (state: DayDialogState) -> Unit
 
-class DayDialogFragment: DialogFragment() {
+class DayDialogFragment : DialogFragment() {
 
     private var state: DayDialogState = DayDialogState()
     var listener: DialogListener = { }
@@ -24,18 +24,31 @@ class DayDialogFragment: DialogFragment() {
         return AlertDialog.Builder(requireContext())
             .setTitle(state.title)
             .setView(dialogBinding.root)
-            .setPositiveButton("Ок") {_,_ ->
+            .setPositiveButton("Ок") { _, _ ->
+                var hours = dialogBinding.editTextHours.text.toString()
+                if(hours.isEmpty()){
+                    hours = "0"
+                }
+                var rate = dialogBinding.editTextRate.text.toString()
+                if(rate.isEmpty()){
+                    rate = "0"
+                }
+                var coefficient = dialogBinding.editTextCoefficient.text.toString()
+                if(coefficient.isEmpty()){
+                    coefficient = "0"
+                }
+                var description = dialogBinding.editTextDescription.text.toString()
                 listener.invoke(
                     DayDialogState(
-                        hours = dialogBinding.editTextHours.text.toString(),
-                        rate = dialogBinding.editTextRate.text.toString(),
-                        coefficient = dialogBinding.editTextCoefficient.text.toString(),
-                        description = dialogBinding.editTextDescription.text.toString()
-                )
+                        hours = hours,
+                        rate = rate,
+                        coefficient = coefficient,
+                        description = description
+                    )
                 )
                 dismiss()
             }
-            .setNegativeButton("Отмена") {_,_ ->}
+            .setNegativeButton("Отмена") { _, _ -> }
             .create()
     }
 
@@ -44,7 +57,7 @@ class DayDialogFragment: DialogFragment() {
         this.state = state
     }
 
-    companion object{
-        const val TAG ="CalendarDialogFragment"
+    companion object {
+        const val TAG = "CalendarDialogFragment"
     }
 }

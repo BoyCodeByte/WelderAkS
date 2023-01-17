@@ -13,8 +13,8 @@ class CalendarAdapter(
     private val context: Context
 ) : RecyclerView.Adapter<CalendarAdapter.DatePickerViewHolder>() {
 
-    private val mMinDate = Calendar.getInstance()
-    private val mMaxDate = Calendar.getInstance()
+    val mMinDate = Calendar.getInstance().apply { set(2022, Calendar.DECEMBER, 1) }
+    val mMaxDate = Calendar.getInstance().apply { set(2032, Calendar.DECEMBER, 31) }
     private var onDayClickListener: OnDayClickListener? = null
     private var count = 0
 
@@ -34,7 +34,8 @@ class CalendarAdapter(
         }
 
     init {
-        initDateRange()
+        count = getDiffMonths(mMaxDate,mMinDate)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DatePickerViewHolder {
@@ -48,8 +49,13 @@ class CalendarAdapter(
 
     override fun onBindViewHolder(holder: DatePickerViewHolder, position: Int) {
         val view = holder.itemView as DatePickerView
-        view.setMonthAndYear(getMonthForPosition(position), getYearForPosition(position) , getMonthData(position))
-        view.monthData = calendarData.getYear(getYearForPosition(position)).getMonth(getMonthForPosition(position)+1)
+        view.setMonthAndYear(
+            getMonthForPosition(position),
+            getYearForPosition(position),
+            getMonthData(position)
+        )
+        view.monthData = calendarData.getYear(getYearForPosition(position))
+            .getMonth(getMonthForPosition(position) + 1)
         view.onDayClickListener = listener
     }
 
@@ -63,16 +69,6 @@ class CalendarAdapter(
         return count
     }
 
-    private fun initDateRange() {
-        mMinDate.set(2022, Calendar.DECEMBER, 1)
-        mMaxDate.set(2032, Calendar.DECEMBER, 31)
-        val diffYear: Int = mMaxDate.get(Calendar.YEAR) - mMinDate.get(Calendar.YEAR)
-        val diffMonth: Int = mMaxDate.get(Calendar.MONTH) - mMinDate.get(Calendar.MONTH)
-        count = diffMonth + 12 * diffYear + 1
-        notifyDataSetChanged()
-    }
-
-
     private fun getMonthForPosition(position: Int): Int {
         return (position + mMinDate[Calendar.MONTH]) % 12
     }
@@ -81,6 +77,12 @@ class CalendarAdapter(
         val yearOffset: Int =
             (position + mMinDate[Calendar.MONTH]) / 12
         return yearOffset + mMinDate[Calendar.YEAR]
+    }
+
+    fun getDiffMonths(maxDate: Calendar, minDate:Calendar): Int {
+        val diffYear: Int = maxDate.get(Calendar.YEAR) - minDate.get(Calendar.YEAR)
+        val diffMonth: Int = maxDate.get(Calendar.MONTH) - minDate.get(Calendar.MONTH)
+        return diffMonth + 12 * diffYear
     }
 
     fun getCurrentMonth(position: Int): Calendar {
