@@ -8,11 +8,13 @@ import androidx.fragment.app.FragmentManager
 import com.boycodebyte.welderaks.databinding.CalendarDialogBinding
 
 typealias DialogListener = (state: DayDialogState) -> Unit
+typealias DeleteListener = () -> Unit
 
 class DayDialogFragment : DialogFragment() {
 
     private var state: DayDialogState = DayDialogState()
-    var listener: DialogListener = { }
+    var acceptListener: DialogListener = { }
+    var deleteListener: DeleteListener = { }
 
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -38,7 +40,7 @@ class DayDialogFragment : DialogFragment() {
                     coefficient = "0"
                 }
                 var description = dialogBinding.editTextDescription.text.toString()
-                listener.invoke(
+                acceptListener.invoke(
                     DayDialogState(
                         hours = hours,
                         rate = rate,
@@ -49,6 +51,9 @@ class DayDialogFragment : DialogFragment() {
                 dismiss()
             }
             .setNegativeButton("Отмена") { _, _ -> }
+            .setNeutralButton("Удалить") { _, _ ->
+                deleteListener.invoke()
+            }
             .create()
     }
 

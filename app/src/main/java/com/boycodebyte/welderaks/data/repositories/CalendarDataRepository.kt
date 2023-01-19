@@ -13,6 +13,10 @@ class CalendarDataRepository(private val storage: FirebaseStorage) {
         storage.setDayData(id, date, day)
     }
 
+    fun removeDayData(id: Int, date: Calendar){
+        storage.removeDayData(id,date)
+    }
+
     fun setPrepaymentData(id: Int, date: Calendar, prepayment: Int) {
         storage.setPrepaymentData(id, date, prepayment)
     }

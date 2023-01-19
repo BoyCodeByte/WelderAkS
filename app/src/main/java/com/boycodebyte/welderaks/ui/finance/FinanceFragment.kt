@@ -84,7 +84,10 @@ class FinanceFragment : Fragment() {
         }
 
         binding.payButton.setOnClickListener {
-
+            val state = financeViewModel.clickPay()
+            if(state != null) {
+                showPayDialog(state)
+            }
         }
 
         return binding.root
@@ -109,7 +112,8 @@ class FinanceFragment : Fragment() {
 
     private fun showCalendarDialog(state: DayDialogState) {
         val dialog = DayDialogFragment()
-        dialog.listener = { financeViewModel.setDayData(it) }
+        dialog.acceptListener = { financeViewModel.setDayData(it) }
+        dialog.deleteListener = {financeViewModel.removeDayData()}
         dialog.show(childFragmentManager, DayDialogFragment.TAG, state)
     }
 

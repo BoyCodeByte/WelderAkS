@@ -266,4 +266,16 @@ class FirebaseStorage {
             .child((date.get(Calendar.MONTH) + 1).toString())
             .child(AWARD_CHILD).setValue(award)
     }
+
+    fun removeDayData(id: Int, date: Calendar) {
+        val myRef = FirebaseDatabase.getInstance().reference
+        myRef.child(CALENDARS_CHILD).child(id.toString())
+            .child(YEARS_CHILD)
+            .child(date.get(Calendar.YEAR).toString())
+            .child(MONTHS_CHILD)
+            .child((date.get(Calendar.MONTH) + 1).toString())
+            .child(DAYS_CHILD)
+            .child(date.get(Calendar.DATE).toString())
+            .removeValue()
+    }
 }

@@ -13,6 +13,7 @@ import com.boycodebyte.welderaks.data.repositories.ProfileRepository
 import com.boycodebyte.welderaks.data.storage.FirebaseStorage
 import com.boycodebyte.welderaks.domain.usecase.GetCalendarDataByIDUseCase
 import com.boycodebyte.welderaks.domain.usecase.GetProfilesWithoutGeneralUseCase
+import com.boycodebyte.welderaks.domain.usecase.RemoveDayDataByIDUseCase
 import com.boycodebyte.welderaks.domain.usecase.SetDayDataByIDUseCase
 import kotlin.math.ceil
 
@@ -23,6 +24,11 @@ class FinanceViewModel : ViewModel() {
     private var selectedDay: Calendar = Calendar.getInstance()
 
     private val getCalendarDataByIDUseCase = GetCalendarDataByIDUseCase(
+        CalendarDataRepository(
+            FirebaseStorage()
+        )
+    )
+    private val removeDayDataByIDUseCase = RemoveDayDataByIDUseCase(
         CalendarDataRepository(
             FirebaseStorage()
         )
@@ -115,6 +121,13 @@ class FinanceViewModel : ViewModel() {
         )
         if (selectedProfile != null) {
             setDayDataByIDUseCase.execute(selectedProfile!!.id, selectedDay, day)
+            updateCalendarData()
+        }
+    }
+
+    fun removeDayData(){
+        if (selectedProfile != null) {
+            removeDayDataByIDUseCase.execute(selectedProfile!!.id, selectedDay)
             updateCalendarData()
         }
     }
