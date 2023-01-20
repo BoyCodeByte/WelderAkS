@@ -30,6 +30,10 @@ class DayDialogFragment : DialogFragment() {
                 var hours = dialogBinding.editTextHours.text.toString()
                 if(hours.isEmpty()){
                     hours = "0"
+                }else{
+                    if(hours.toInt() >24){
+                        hours = "24"
+                    }
                 }
                 var rate = dialogBinding.editTextRate.text.toString()
                 if(rate.isEmpty()){

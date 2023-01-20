@@ -51,30 +51,30 @@ class ProfileDetailsFragment: Fragment() {
             adapter.addAll(list)
         }
 
-        profileDetailsViewModel.profile.observe(viewLifecycleOwner,{
+        profileDetailsViewModel.profile.observe(viewLifecycleOwner) {
             binding.profileNameEdit.setText(it.name)
             binding.profileSurnameEdit.setText(it.surname)
             binding.profileBirthdateEdit.setText(it.dateOfBirth)
             binding.profileJobTitleEdit.setText(it.jobTitle)
             binding.profilePhoneNumberEdit.setText(it.phoneNumber)
 
-            var account: String=it.accountType.toString()
-            var position:Int=0
-            when(account){
-                "GENERAL"->position
-                "MASTER"->position=1
-                "WORKER"->position=2
+            var account: String = it.accountType.toString()
+            var position: Int = 0
+            when (account) {
+                "GENERAL" -> position
+                "MASTER" -> position = 1
+                "WORKER" -> position = 2
             }
             binding.spinnerAccountType.setSelection(position)
             binding.rateEdit.setText(it.rate.toString())///????????????????????
             binding.profileLoginEdit.setText(it.login)
             binding.profilePasswordEdit.setText(it.password)
-        })
+        }
 
         profileDetailsViewModel.loadProfile(amount)
 
         binding.updateProfile.setOnClickListener {
-            if(binding.rateEdit.text.length!=0){
+            if(binding.rateEdit.text.isNotEmpty()){
             profileDetailsViewModel.saveChange(binding.profileNameEdit.text.toString(),
             binding.profileSurnameEdit.text.toString(),
             binding.profileBirthdateEdit.text.toString(),

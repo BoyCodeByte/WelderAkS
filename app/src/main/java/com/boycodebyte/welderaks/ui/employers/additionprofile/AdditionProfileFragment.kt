@@ -47,7 +47,7 @@ class AdditionProfileFragment: Fragment() {
         binding.spinnerAccountType.setSelection(2)
 
         binding.addProfile.setOnClickListener {
-            if (binding.rateEdit.text.length!=0){
+            if (binding.rateEdit.text.isNotEmpty()){
             additionProfileViewModel.add(binding.profileNameEdit.text.toString(),binding.profileSurnameEdit.text.toString(),
             binding.spinnerAccountType.selectedItem.toString(),binding.profileBirthdateEdit.text.toString(),
             binding.profileJobTitleEdit.text.toString(),binding.profileLoginEdit.text.toString(),
@@ -56,6 +56,21 @@ class AdditionProfileFragment: Fragment() {
             findNavController().popBackStack()
             }else{
                 val toast= Toast.makeText(requireContext(),"Заполните поле: ${binding.rateText.text}",
+                    Toast.LENGTH_SHORT)
+                toast.show()
+                binding.rateEdit.background.setTint(resources.getColor(R.color.holo_red_light,resources.newTheme()))
+                return@setOnClickListener
+            }
+
+            if (binding.rateEdit.text.isNotEmpty()){
+                additionProfileViewModel.add(binding.profileNameEdit.text.toString(),binding.profileSurnameEdit.text.toString(),
+                    binding.spinnerAccountType.selectedItem.toString(),binding.profileBirthdateEdit.text.toString(),
+                    binding.profileJobTitleEdit.text.toString(),binding.profileLoginEdit.text.toString(),
+                    binding.profilePasswordEdit.text.toString(),binding.profilePhoneNumberEdit.text.toString(),
+                    binding.rateEdit.text.toString().toInt())
+                findNavController().popBackStack()
+            }else{
+                val toast= Toast.makeText(requireContext(),"Такой логин уже существует: ${binding.profileLoginEdit.text}",
                     Toast.LENGTH_SHORT)
                 toast.show()
                 binding.rateEdit.background.setTint(resources.getColor(R.color.holo_red_light,resources.newTheme()))
