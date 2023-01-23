@@ -1,12 +1,9 @@
-package com.boycodebyte.welderaks.ui.finance
+package com.boycodebyte.welderaks.ui.finance.general
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.icu.util.Calendar
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.ViewModelProvider
-import com.boycodebyte.welderaks.data.models.Profile
 import com.boycodebyte.welderaks.data.repositories.CalendarDataRepository
 import com.boycodebyte.welderaks.data.storage.FirebaseStorage
 import com.boycodebyte.welderaks.databinding.FragmentPayBinding
@@ -14,6 +11,7 @@ import com.boycodebyte.welderaks.databinding.FragmentPayBinding
 import com.boycodebyte.welderaks.domain.usecase.SetAwardUseCase
 import com.boycodebyte.welderaks.domain.usecase.SetPrepaymentUseCase
 import com.boycodebyte.welderaks.domain.usecase.SetSalaryUseCase
+import com.boycodebyte.welderaks.ui.finance.PayDialogState
 
 
 class PayDialogFragment(

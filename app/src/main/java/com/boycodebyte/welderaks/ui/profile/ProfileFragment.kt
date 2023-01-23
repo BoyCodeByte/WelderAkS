@@ -10,8 +10,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
-import com.boycodebyte.welderaks.MainActivity
 import com.boycodebyte.welderaks.databinding.FragmentProfileBinding
 import com.boycodebyte.welderaks.getProfile
 import com.boycodebyte.welderaks.removeProfile

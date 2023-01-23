@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_profile">
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.boycodebyte.welderaks.ui.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_finance"
+        android:name="com.boycodebyte.welderaks.ui.finance.worker.FinanceFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_finance_worker" />
+
+    <fragment
+        android:id="@+id/navigation_instruments"
+        android:name="com.boycodebyte.welderaks.ui.instruments.InstrumentsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_instruments" >
+        <action
+            android:id="@+id/action_navigation_instruments_to_instrumentDetailsFragment"
+            app:destination="@id/instrumentDetailsFragment"
+            />
+        <action
+            android:id="@+id/action_navigation_instruments_to_additionInstrumentFragment"
+            app:destination="@id/additionInstrumentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/instrumentDetailsFragment"
+        android:name="com.boycodebyte.welderaks.ui.instruments.detailsinstrument.InstrumentDetailsFragment"
+        android:label="InstrumentDetails"
+        >
+        <argument
+            android:name="identification"
+            app:argType="integer" />
+    </fragment>
+</navigation>

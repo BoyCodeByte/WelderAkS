@@ -27,7 +27,12 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".GeneralActivity"
+            android:exported="false"
+            android:label="@string/app_name">
+        </activity>
+        <activity
+            android:name=".WorkerActivity"
             android:exported="false"
             android:label="@string/app_name">
         </activity>

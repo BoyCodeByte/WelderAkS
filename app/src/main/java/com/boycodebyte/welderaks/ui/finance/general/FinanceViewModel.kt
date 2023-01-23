@@ -1,4 +1,4 @@
-package com.boycodebyte.welderaks.ui.finance
+package com.boycodebyte.welderaks.ui.finance.general
 
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
@@ -15,6 +15,10 @@ import com.boycodebyte.welderaks.domain.usecase.GetCalendarDataByIDUseCase
 import com.boycodebyte.welderaks.domain.usecase.GetProfilesWithoutGeneralUseCase
 import com.boycodebyte.welderaks.domain.usecase.RemoveDayDataByIDUseCase
 import com.boycodebyte.welderaks.domain.usecase.SetDayDataByIDUseCase
+import com.boycodebyte.welderaks.ui.finance.DayDialogState
+import com.boycodebyte.welderaks.ui.finance.MonthlySummaryState
+import com.boycodebyte.welderaks.ui.finance.PayDialogState
+import com.boycodebyte.welderaks.ui.finance.PaymentState
 import kotlin.math.ceil
 
 class FinanceViewModel : ViewModel() {

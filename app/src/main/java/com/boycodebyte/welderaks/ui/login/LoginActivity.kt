@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.boycodebyte.welderaks.MainActivity
+import com.boycodebyte.welderaks.GeneralActivity
+import com.boycodebyte.welderaks.WorkerActivity
+import com.boycodebyte.welderaks.data.models.AccountType
 import com.boycodebyte.welderaks.data.models.LoginParam
 import com.boycodebyte.welderaks.data.repositories.LoginParamRepository
 import com.boycodebyte.welderaks.data.repositories.ProfileRepository
@@ -34,10 +36,18 @@ class LoginActivity : AppCompatActivity() {
                 val profile = loginUseCase.execute(param)
                 setLoginParamRepository.execute(LoginParam(login, password))
                 setProfile(profile)
-                val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                startActivity(intent)
-                finish()
+                if(profile.accountType == AccountType.GENERAL) {
+                    val intent = Intent(this@LoginActivity, GeneralActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+                if(profile.accountType == AccountType.WORKER) {
+                    val intent = Intent(this@LoginActivity, WorkerActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
             } catch (e: Exception) {
+                println(e.message)
                 val toast = Toast.makeText(
                     this@LoginActivity,
                     "Неверно введен логин или пароль",

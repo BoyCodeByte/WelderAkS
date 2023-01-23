@@ -5,37 +5,26 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.boycodebyte.welderaks.data.models.Instrument
-import com.boycodebyte.welderaks.data.storage.PROFILES_CHILD
-import com.boycodebyte.welderaks.databinding.ActivityMainBinding
-import com.boycodebyte.welderaks.ui.instruments.detailsinstrument.InstrumentDetailsFragment
+import com.boycodebyte.welderaks.databinding.ActivityGeneralBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 
-class MainActivity : AppCompatActivity(){
+class GeneralActivity : AppCompatActivity(){
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityGeneralBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityGeneralBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
         val navView: BottomNavigationView = binding.navView
         navView.itemIconTintList = null
 
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        val navController = findNavController(R.id.nav_host_fragment_activity_general)
         navView.setupWithNavController(navController)
 
     }
-
-    fun logout(){
-
-    }
-
 }

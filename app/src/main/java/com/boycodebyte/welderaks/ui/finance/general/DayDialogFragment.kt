@@ -1,4 +1,4 @@
-package com.boycodebyte.welderaks.ui.finance
+package com.boycodebyte.welderaks.ui.finance.general
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.boycodebyte.welderaks.databinding.CalendarDialogBinding
+import com.boycodebyte.welderaks.ui.finance.DayDialogState
 
 typealias DialogListener = (state: DayDialogState) -> Unit
 typealias DeleteListener = () -> Unit

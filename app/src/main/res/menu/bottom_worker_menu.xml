@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_profile"
+        android:title="@string/profile" />
+
+    <item
+        android:id="@+id/navigation_finance"
+        android:icon="@drawable/ic_finance"
+        android:title="@string/finance" />
+
+    <item
+        android:id="@+id/navigation_instruments"
+        android:icon="@drawable/ic_instruments"
+        android:title="@string/instruments" />
+
+</menu>

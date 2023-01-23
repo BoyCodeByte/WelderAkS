@@ -1,4 +1,4 @@
-package com.boycodebyte.welderaks.ui.finance
+package com.boycodebyte.welderaks.ui.finance.general
 
 import android.icu.util.Calendar
 import android.os.Bundle
@@ -13,6 +13,7 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.boycodebyte.welderaks.R
 import com.boycodebyte.welderaks.data.models.Profile
 import com.boycodebyte.welderaks.databinding.FragmentFinanceBinding
+import com.boycodebyte.welderaks.ui.finance.*
 import com.boycodebyte.welderaks.ui.finance.calendar.CalendarAdapter
 import com.boycodebyte.welderaks.ui.finance.calendar.DatePickerView
 import com.boycodebyte.welderaks.ui.finance.calendar.DatePickerView.OnDayClickListener

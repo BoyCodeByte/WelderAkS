@@ -3,7 +3,9 @@ package com.boycodebyte.welderaks.ui.splashscreen
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.boycodebyte.welderaks.MainActivity
+import com.boycodebyte.welderaks.GeneralActivity
+import com.boycodebyte.welderaks.WorkerActivity
+import com.boycodebyte.welderaks.data.models.AccountType
 import com.boycodebyte.welderaks.data.repositories.LoginParamRepository
 import com.boycodebyte.welderaks.data.repositories.ProfileRepository
 import com.boycodebyte.welderaks.data.storage.FirebaseStorage
@@ -30,9 +32,16 @@ class SplashScreenActivity : AppCompatActivity() {
                 val params = getLoginParamRepository.execute()
                 val profile = loginUseCase.execute(params)
                 setProfile(profile)
-                val intent = Intent(this@SplashScreenActivity, MainActivity::class.java)
-                startActivity(intent)
-                finish()
+                if(profile.accountType == AccountType.GENERAL) {
+                    val intent = Intent(this@SplashScreenActivity, GeneralActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+                if(profile.accountType == AccountType.WORKER) {
+                    val intent = Intent(this@SplashScreenActivity, WorkerActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
             } catch (e: Exception) {
                 val intent = Intent(this@SplashScreenActivity, LoginActivity::class.java)
                 startActivity(intent)

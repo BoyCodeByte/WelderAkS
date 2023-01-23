@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/navigation_finance"
-        android:name="com.boycodebyte.welderaks.ui.finance.FinanceFragment"
+        android:name="com.boycodebyte.welderaks.ui.finance.general.FinanceFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_finance" />
 
