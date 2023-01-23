@@ -17,6 +17,8 @@ class ProfileDetailsViewModel: ViewModel() {
 
     private val updateDetailsProfileUseCase=UpdateDetailsProfileUseCase(ProfileRepository(FirebaseStorage()))
     private var profileByIdUseCase = GetProfileByIdUseCase(ProfileRepository(FirebaseStorage()))
+    private val getProfilesUseCase = GetProfilesUseCase(ProfileRepository(FirebaseStorage()))
+
     private val _profile = MutableLiveData<Profile>()
     val profile: LiveData<Profile> = _profile
 
@@ -60,5 +62,15 @@ class ProfileDetailsViewModel: ViewModel() {
         prof.login=login
         prof.password=password
         updateDetailsProfileUseCase.execute(prof)
+    }
+
+    fun checkLogin(login: String): Boolean {
+        val profiles = getProfilesUseCase.execute()
+        profiles.forEach{
+            if(it.login == login){
+                return false
+            }
+        }
+        return true
     }
 }

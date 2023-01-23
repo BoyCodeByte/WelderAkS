@@ -36,18 +36,33 @@ class PayDialogFragment(
         binding.textSalaryHint.text = "По часам: ${state.hourlyPayment} минус аванс: $currentSalary"
         binding.editAward.setText(state.paymentState.award)
         binding.buttonPrepayment.setOnClickListener {
+            var prepayment = binding.editPrepayment.text.toString()
+            if(prepayment.isEmpty()){
+                prepayment = "0"
+                binding.editPrepayment.setText(prepayment)
+            }
             setPrepaymentUseCase.execute(
-                state.id, state.calendar, binding.editPrepayment.text.toString().toInt()
+                state.id, state.calendar,prepayment.toInt()
             )
         }
         binding.buttonSalary.setOnClickListener {
+            var salary = binding.editSalary.text.toString()
+            if(salary.isEmpty()){
+                salary = "0"
+                binding.editSalary.setText(salary)
+            }
             setSalaryUseCase.execute(
-                state.id, state.calendar, binding.editSalary.text.toString().toInt()
+                state.id, state.calendar, salary.toInt()
             )
         }
         binding.buttonAward.setOnClickListener {
+            var award = binding.editAward.text.toString()
+            if(award.isEmpty()){
+                award = "0"
+                binding.editAward.setText(award)
+            }
             setAwardUseCase.execute(
-                state.id, state.calendar, binding.editAward.text.toString().toInt()
+                state.id, state.calendar, award.toInt()
             )
         }
         return AlertDialog.Builder(requireContext())

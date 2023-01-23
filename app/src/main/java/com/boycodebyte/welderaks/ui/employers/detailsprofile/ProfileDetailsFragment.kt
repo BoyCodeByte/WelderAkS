@@ -22,6 +22,7 @@ class ProfileDetailsFragment: Fragment() {
     private var _binding: FragmentProfileDetailsBinding?=null
     private lateinit var layoutManager: LayoutManager
     private lateinit var profileDetailsViewModel: ProfileDetailsViewModel
+    private lateinit var currentLogin: String
 
     private val binding get() = _binding!!
 
@@ -68,6 +69,7 @@ class ProfileDetailsFragment: Fragment() {
             binding.spinnerAccountType.setSelection(position)
             binding.rateEdit.setText(it.rate.toString())///????????????????????
             binding.profileLoginEdit.setText(it.login)
+            currentLogin = it.login
             binding.profilePasswordEdit.setText(it.password)
         }
 
@@ -75,6 +77,17 @@ class ProfileDetailsFragment: Fragment() {
 
         binding.updateProfile.setOnClickListener {
             if(binding.rateEdit.text.isNotEmpty()){
+                if(currentLogin != binding.profileLoginEdit.text.toString()) {
+                    if (!profileDetailsViewModel.checkLogin(binding.profileLoginEdit.text.toString())) {
+                        val toast = Toast.makeText(
+                            requireContext(),
+                            "Такой логин уже существует: ${binding.profileLoginEdit.text}",
+                            Toast.LENGTH_SHORT
+                        )
+                        toast.show()
+                        return@setOnClickListener
+                    }
+                }
             profileDetailsViewModel.saveChange(binding.profileNameEdit.text.toString(),
             binding.profileSurnameEdit.text.toString(),
             binding.profileBirthdateEdit.text.toString(),

@@ -8,11 +8,13 @@ import com.boycodebyte.welderaks.data.models.getEmptyProfile
 import com.boycodebyte.welderaks.data.repositories.ProfileRepository
 import com.boycodebyte.welderaks.data.storage.FirebaseStorage
 import com.boycodebyte.welderaks.domain.usecase.AdditionProfileUseCase
+import com.boycodebyte.welderaks.domain.usecase.GetProfilesUseCase
 
 
 class AdditionProfileViewModel: ViewModel() {
 
-    private val additionProfileUseCase=AdditionProfileUseCase(ProfileRepository(FirebaseStorage()))
+    private val additionProfileUseCase =AdditionProfileUseCase(ProfileRepository(FirebaseStorage()))
+    private val getProfilesUseCase = GetProfilesUseCase(ProfileRepository(FirebaseStorage()))
 
     private var type:List<String> = ArrayList<String>().apply {
         add(AccountType.GENERAL.toString())
@@ -45,5 +47,14 @@ class AdditionProfileViewModel: ViewModel() {
         profile.phoneNumber=phoneNumber
         profile.rate=rate
         additionProfileUseCase.execute(profile)
+    }
+    fun checkLogin(login: String): Boolean{
+        val profiles = getProfilesUseCase.execute()
+        profiles.forEach{
+            if(it.login == login){
+                return false
+            }
+        }
+        return true
     }
 }
