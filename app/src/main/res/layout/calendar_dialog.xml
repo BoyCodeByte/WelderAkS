@@ -6,46 +6,46 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/editTextHours"
+        android:id="@+id/textHours"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Часы"
         android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/editTextRate"
+        app:layout_constraintBottom_toTopOf="@+id/textRate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextRate"
+        android:id="@+id/textRate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Ставка"
         android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/editTextCoefficient"
+        app:layout_constraintBottom_toTopOf="@+id/textCoefficient"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextHours" />
+        app:layout_constraintTop_toBottomOf="@+id/textHours" />
 
     <EditText
-        android:id="@+id/editTextCoefficient"
+        android:id="@+id/textCoefficient"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Коэффициент"
         android:inputType="numberDecimal"
-        app:layout_constraintBottom_toTopOf="@+id/editTextDescription"
+        app:layout_constraintBottom_toTopOf="@+id/textDescription"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextRate" />
+        app:layout_constraintTop_toBottomOf="@+id/textRate" />
 
     <EditText
-        android:id="@+id/editTextDescription"
+        android:id="@+id/textDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -55,5 +55,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextCoefficient" />
+        app:layout_constraintTop_toBottomOf="@+id/textCoefficient" />
 </androidx.constraintlayout.widget.ConstraintLayout>

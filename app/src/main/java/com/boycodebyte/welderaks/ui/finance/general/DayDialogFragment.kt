@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.boycodebyte.welderaks.databinding.CalendarDialogBinding
+
 import com.boycodebyte.welderaks.ui.finance.DayDialogState
 
 typealias DialogListener = (state: DayDialogState) -> Unit
@@ -20,15 +21,15 @@ class DayDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialogBinding = CalendarDialogBinding.inflate(layoutInflater)
-        dialogBinding.editTextHours.setText(state.hours)
-        dialogBinding.editTextRate.setText(state.rate)
-        dialogBinding.editTextCoefficient.setText(state.coefficient)
-        dialogBinding.editTextDescription.setText(state.description)
+        dialogBinding.textHours.setText(state.hours)
+        dialogBinding.textRate.setText(state.rate)
+        dialogBinding.textCoefficient.setText(state.coefficient)
+        dialogBinding.textDescription.setText(state.description)
         return AlertDialog.Builder(requireContext())
             .setTitle(state.title)
             .setView(dialogBinding.root)
             .setPositiveButton("Ок") { _, _ ->
-                var hours = dialogBinding.editTextHours.text.toString()
+                var hours = dialogBinding.textHours.text.toString()
                 if(hours.isEmpty()){
                     hours = "0"
                 }else{
@@ -36,15 +37,15 @@ class DayDialogFragment : DialogFragment() {
                         hours = "24"
                     }
                 }
-                var rate = dialogBinding.editTextRate.text.toString()
+                var rate = dialogBinding.textRate.text.toString()
                 if(rate.isEmpty()){
                     rate = "0"
                 }
-                var coefficient = dialogBinding.editTextCoefficient.text.toString()
+                var coefficient = dialogBinding.textCoefficient.text.toString()
                 if(coefficient.isEmpty()){
                     coefficient = "0"
                 }
-                var description = dialogBinding.editTextDescription.text.toString()
+                var description = dialogBinding.textDescription.text.toString()
                 acceptListener.invoke(
                     DayDialogState(
                         hours = hours,

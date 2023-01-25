@@ -89,7 +89,7 @@ class FinanceViewModel : ViewModel() {
             rate = selectedProfile?.rate.toString()
         }
         return DayDialogState(
-            title = SimpleDateFormat("yyyy-MM-dd").format(selectedDate.time),
+            title = SimpleDateFormat("dd-MM-yyyy").format(selectedDate.time),
             hours = dataOfDay?.hours.toString(),
             rate = rate,
             coefficient = dataOfDay?.coefficient.toString(),

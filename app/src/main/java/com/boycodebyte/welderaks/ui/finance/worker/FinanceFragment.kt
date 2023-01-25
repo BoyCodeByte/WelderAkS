@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.boycodebyte.welderaks.databinding.FragmentFinanceWorkerBinding
+import com.boycodebyte.welderaks.getProfile
 import com.boycodebyte.welderaks.ui.finance.DayDialogState
 import com.boycodebyte.welderaks.ui.finance.MonthlySummaryState
 import com.boycodebyte.welderaks.ui.finance.PaymentState
@@ -63,7 +64,8 @@ class FinanceFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        financeViewModel.update()
+        println(requireActivity().getProfile())
+        financeViewModel.updateCalendarData(requireActivity().getProfile())
         binding.pager.setCurrentItem(
             calendarAdapter.getDiffMonths(
                 Calendar.getInstance(),
