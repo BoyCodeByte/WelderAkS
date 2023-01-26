@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/instrumentDetailsFragment"
-        android:name="com.boycodebyte.welderaks.ui.instruments.general.detailsinstrument.InstrumentDetailsFragment"
+        android:name="com.boycodebyte.welderaks.ui.instruments.general.detailsinstrument.DetailsFragment"
         android:label="InstrumentDetails"
         >
         <argument

@@ -3,39 +3,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_profile">
+    app:startDestination="@+id/navigation_profile_worker">
 
     <fragment
-        android:id="@+id/navigation_profile"
+        android:id="@+id/navigation_profile_worker"
         android:name="com.boycodebyte.welderaks.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" >
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_finance"
+        android:id="@+id/navigation_finance_worker"
         android:name="com.boycodebyte.welderaks.ui.finance.worker.FinanceFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_finance_worker" />
 
     <fragment
-        android:id="@+id/navigation_instruments"
-        android:name="com.boycodebyte.welderaks.ui.instruments.general.InstrumentsFragment"
+        android:id="@+id/navigation_instruments_worker"
+        android:name="com.boycodebyte.welderaks.ui.instruments.worker.InstrumentsFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_instruments" >
+        tools:layout="@layout/fragment_instruments_worker" >
         <action
             android:id="@+id/action_navigation_instruments_to_instrumentDetailsFragment"
-            app:destination="@id/instrumentDetailsFragment"
-            />
-        <action
-            android:id="@+id/action_navigation_instruments_to_additionInstrumentFragment"
-            app:destination="@id/additionInstrumentFragment" />
+            app:destination="@id/instrumentDetailsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/instrumentDetailsFragment"
-        android:name="com.boycodebyte.welderaks.ui.instruments.general.detailsinstrument.InstrumentDetailsFragment"
-        android:label="InstrumentDetails"
-        >
+        android:id="@+id/navigation_instrument_details"
+        android:name="com.boycodebyte.welderaks.ui.instruments.worker.detailsinstrument.DetailsFragment"
+        android:label="InstrumentDetails">
         <argument
             android:name="identification"
             app:argType="integer" />

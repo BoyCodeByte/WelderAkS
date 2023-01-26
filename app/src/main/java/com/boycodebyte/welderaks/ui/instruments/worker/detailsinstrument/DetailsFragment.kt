@@ -1,4 +1,4 @@
-package com.boycodebyte.welderaks.ui.instruments.general.detailsinstrument
+package com.boycodebyte.welderaks.ui.instruments.worker.detailsinstrument
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,7 +19,7 @@ import com.boycodebyte.welderaks.data.models.getEmptyProfile
 import com.boycodebyte.welderaks.databinding.FragmentInstrumentDetailsBinding
 
 
-class InstrumentDetailsFragment : Fragment() {
+class DetailsFragment : Fragment() {
 
     private var _binding: FragmentInstrumentDetailsBinding? = null
     private lateinit var layout: LayoutManager

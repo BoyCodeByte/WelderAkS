@@ -14,9 +14,6 @@ import com.boycodebyte.welderaks.databinding.ItemInstrumentWorkerBinding
 
 
 interface InstrumentActionListeners {
-
-    fun onInstrumentDelete(instrument: Instrument)
-
     fun onInstrumentDetails(instrument: Instrument)
 }
 
