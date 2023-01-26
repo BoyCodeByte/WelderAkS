@@ -1,4 +1,4 @@
-package com.boycodebyte.welderaks.ui.instruments.additioninstrument
+package com.boycodebyte.welderaks.ui.instruments.general.additioninstrument
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

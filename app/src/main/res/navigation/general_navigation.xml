@@ -33,7 +33,7 @@
 
     <fragment
         android:id="@+id/navigation_instruments"
-        android:name="com.boycodebyte.welderaks.ui.instruments.InstrumentsFragment"
+        android:name="com.boycodebyte.welderaks.ui.instruments.general.InstrumentsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_instruments" >
         <action
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/instrumentDetailsFragment"
-        android:name="com.boycodebyte.welderaks.ui.instruments.detailsinstrument.InstrumentDetailsFragment"
+        android:name="com.boycodebyte.welderaks.ui.instruments.general.detailsinstrument.InstrumentDetailsFragment"
         android:label="InstrumentDetails"
         >
         <argument
@@ -55,7 +55,7 @@
     </fragment>
     <fragment
         android:id="@+id/additionInstrumentFragment"
-        android:name="com.boycodebyte.welderaks.ui.instruments.additioninstrument.AdditionInstrumentFragment"
+        android:name="com.boycodebyte.welderaks.ui.instruments.general.additioninstrument.AdditionInstrumentFragment"
         android:label="AdditionInstrumentFragment" />
     <fragment
         android:id="@+id/profileDetailsFragment"

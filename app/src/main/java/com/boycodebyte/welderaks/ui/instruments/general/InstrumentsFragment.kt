@@ -1,4 +1,4 @@
-package com.boycodebyte.welderaks.ui.instruments
+package com.boycodebyte.welderaks.ui.instruments.general
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,7 +18,7 @@ class InstrumentsFragment : Fragment() {
     private var _binding: FragmentInstrumentsBinding? = null
     private lateinit var adapter: InstrumentRecyclerAdapter
     private lateinit var layoutManager: LayoutManager
-    private lateinit var instrumentsViewModel:InstrumentsViewModel
+    private lateinit var instrumentsViewModel: InstrumentsViewModel
 
 
     private val binding get() = _binding!!

@@ -1,4 +1,4 @@
-package com.boycodebyte.welderaks.ui.instruments.additioninstrument
+package com.boycodebyte.welderaks.ui.instruments.general.additioninstrument
 
 import android.R
 import android.os.Bundle

@@ -9,18 +9,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".ui.instruments.general.InstrumentsFragment">
-
-        <Button
-            android:id="@+id/add_instrument"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/basic"
-            android:text="@string/add_instrument"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recyclerView" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
