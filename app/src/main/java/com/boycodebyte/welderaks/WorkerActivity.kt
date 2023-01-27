@@ -20,11 +20,11 @@ class WorkerActivity : AppCompatActivity(){
         setContentView(binding.root)
 
 
-        val navView: BottomNavigationView = binding.navView
-        navView.itemIconTintList = null
-
         val navController = findNavController(R.id.nav_host_fragment_activity_worker)
-        navView.setupWithNavController(navController)
+
+        val bottomNavigationView: BottomNavigationView = binding.navView
+        bottomNavigationView.itemIconTintList = null
+        bottomNavigationView.setupWithNavController(navController)
 
     }
 }

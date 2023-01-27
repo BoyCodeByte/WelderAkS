@@ -8,29 +8,29 @@
     <fragment
         android:id="@+id/navigation_profile_worker"
         android:name="com.boycodebyte.welderaks.ui.profile.ProfileFragment"
-        android:label="@string/title_profile"
+        android:label="@string/profile"
         tools:layout="@layout/fragment_profile" >
     </fragment>
 
     <fragment
         android:id="@+id/navigation_finance_worker"
         android:name="com.boycodebyte.welderaks.ui.finance.worker.FinanceFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/finance"
         tools:layout="@layout/fragment_finance_worker" />
 
     <fragment
         android:id="@+id/navigation_instruments_worker"
         android:name="com.boycodebyte.welderaks.ui.instruments.worker.InstrumentsFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/instruments"
         tools:layout="@layout/fragment_instruments_worker" >
         <action
-            android:id="@+id/action_navigation_instruments_to_instrumentDetailsFragment"
-            app:destination="@id/instrumentDetailsFragment" />
+            android:id="@+id/action_instrumentDetailsFragment"
+            app:destination="@+id/navigation_instrument_details_worker" />
     </fragment>
     <fragment
-        android:id="@+id/navigation_instrument_details"
+        android:id="@+id/navigation_instrument_details_worker"
         android:name="com.boycodebyte.welderaks.ui.instruments.worker.detailsinstrument.DetailsFragment"
-        android:label="InstrumentDetails">
+        android:label="@string/details_of_instrument">
         <argument
             android:name="identification"
             app:argType="integer" />

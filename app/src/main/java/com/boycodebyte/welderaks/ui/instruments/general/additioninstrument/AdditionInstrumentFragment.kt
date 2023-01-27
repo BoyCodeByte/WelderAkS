@@ -44,7 +44,6 @@ class AdditionInstrumentFragment:Fragment() {
             adapter.clear()
             adapter.addAll(list)
             val profile=list.find { it.id== currentInstrument?.idOfProfile ?: getEmptyProfile() }
-            println(currentInstrument?.idOfProfile)
             binding.spinnerAddInstrument.setSelection(list.indexOf(profile))
         }
 

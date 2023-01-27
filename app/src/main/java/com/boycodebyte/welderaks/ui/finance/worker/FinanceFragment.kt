@@ -64,7 +64,6 @@ class FinanceFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        println(requireActivity().getProfile())
         financeViewModel.updateCalendarData(requireActivity().getProfile())
         binding.pager.setCurrentItem(
             calendarAdapter.getDiffMonths(

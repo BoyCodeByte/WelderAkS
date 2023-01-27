@@ -43,7 +43,7 @@ class InstrumentsFragment : Fragment() {
 
         adapter = InstrumentRecyclerAdapter(currentProfile, object : InstrumentActionListeners {
             override fun onInstrumentDetails(instrument: Instrument) {
-                val action = InstrumentsFragmentDirections.actionNavigationInstrumentsToInstrumentDetailsFragment(instrument.id)
+                val action = InstrumentsFragmentDirections.actionInstrumentDetailsFragment(instrument.id)
                 view!!.findNavController().navigate(action)
             }
         })
@@ -52,15 +52,18 @@ class InstrumentsFragment : Fragment() {
 
         instrumentsViewModel.instrumentLiveData.observe(viewLifecycleOwner) {
             adapter.instruments = it
+            if(it.isEmpty()){
+                showEmptyListInfo()
+            } else{
+                hideEmptyListInfo()
+            }
         }
-
-
         return root
     }
 
     override fun onStart() {
         super.onStart()
-        instrumentsViewModel.updateInstrumentsList()
+        instrumentsViewModel.updateInstrumentsList(currentProfile.id)
     }
 
     override fun onDestroyView() {
@@ -72,5 +75,13 @@ class InstrumentsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         layoutManager=LinearLayoutManager(activity)
         binding.recyclerView.layoutManager=layoutManager
+    }
+
+    private fun showEmptyListInfo(){
+        binding.textEmptyInstruments.visibility = View.VISIBLE
+    }
+
+    private fun hideEmptyListInfo(){
+        binding.textEmptyInstruments.visibility = View.GONE
     }
 }

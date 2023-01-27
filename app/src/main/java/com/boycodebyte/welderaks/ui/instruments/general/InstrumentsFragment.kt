@@ -42,7 +42,6 @@ class InstrumentsFragment : Fragment() {
             }
 
             override fun onInstrumentDetails(instrument: Instrument) {
-                println("tool:${instrument.id}")
                 val action=InstrumentsFragmentDirections.actionNavigationInstrumentsToInstrumentDetailsFragment(instrument.id)
                 view!!.findNavController().navigate(action)
             }

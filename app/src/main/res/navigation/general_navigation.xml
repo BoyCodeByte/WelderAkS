@@ -8,15 +8,14 @@
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.boycodebyte.welderaks.ui.profile.ProfileFragment"
-        android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" >
-    </fragment>
+        android:label="@string/profile"
+        tools:layout="@layout/fragment_profile"></fragment>
 
     <fragment
         android:id="@+id/navigation_employers"
         android:name="com.boycodebyte.welderaks.ui.employers.EmployersFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_employers" >
+        android:label="@string/employers"
+        tools:layout="@layout/fragment_employers">
         <action
             android:id="@+id/action_navigation_employers_to_profileDetailsFragment"
             app:destination="@id/profileDetailsFragment" />
@@ -28,27 +27,25 @@
     <fragment
         android:id="@+id/navigation_finance"
         android:name="com.boycodebyte.welderaks.ui.finance.general.FinanceFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/finance"
         tools:layout="@layout/fragment_finance" />
 
     <fragment
         android:id="@+id/navigation_instruments"
         android:name="com.boycodebyte.welderaks.ui.instruments.general.InstrumentsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_instruments" >
+        android:label="@string/instruments"
+        tools:layout="@layout/fragment_instruments">
         <action
             android:id="@+id/action_navigation_instruments_to_instrumentDetailsFragment"
-            app:destination="@id/instrumentDetailsFragment"
-            />
+            app:destination="@id/instrumentDetailsFragment" />
         <action
             android:id="@+id/action_navigation_instruments_to_additionInstrumentFragment"
             app:destination="@id/additionInstrumentFragment" />
     </fragment>
     <fragment
         android:id="@+id/instrumentDetailsFragment"
-        android:name="com.boycodebyte.welderaks.ui.instruments.general.detailsinstrument.DetailsFragment"
-        android:label="InstrumentDetails"
-        >
+        android:name="com.boycodebyte.welderaks.ui.instruments.general.detailsinstrument.InstrumentDetailsFragment"
+        android:label="InstrumentDetails">
         <argument
             android:name="identification"
             app:argType="integer" />
@@ -60,7 +57,7 @@
     <fragment
         android:id="@+id/profileDetailsFragment"
         android:name="com.boycodebyte.welderaks.ui.employers.detailsprofile.ProfileDetailsFragment"
-        android:label="ProfileDetailsFragment" >
+        android:label="ProfileDetailsFragment">
         <argument
             android:name="idProfile"
             app:argType="integer" />

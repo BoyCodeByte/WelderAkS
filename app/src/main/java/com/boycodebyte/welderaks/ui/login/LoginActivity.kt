@@ -47,7 +47,6 @@ class LoginActivity : AppCompatActivity() {
                     finish()
                 }
             } catch (e: Exception) {
-                println(e.message)
                 val toast = Toast.makeText(
                     this@LoginActivity,
                     "Неверно введен логин или пароль",

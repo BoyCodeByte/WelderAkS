@@ -70,7 +70,6 @@ class InstrumentRecyclerAdapter(private val actionListeners: InstrumentActionLis
                 if (it.id == instrument.idOfProfile) {
                     fixedUser.text = "${it.name} ${it.surname}"
                 }
-                println(it)
             }
             photoImageInstr.setImageResource(R.drawable.ic_instruments)
         }
