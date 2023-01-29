@@ -42,11 +42,11 @@ class DetailsFragment : Fragment() {
         val idOfInstrument = args.identification
 
         binding.photoImage.setImageResource(R.drawable.ic_instruments)
-        instrumentDetailsViewModel.instrumentDetails.observe(viewLifecycleOwner, Observer {
+        instrumentDetailsViewModel.instrumentDetails.observe(viewLifecycleOwner) {
             currentInstrument = it
             binding.nameInstrument.text = it.name
             binding.instrumentDetails.text = it.description
-        })
+        }
         instrumentDetailsViewModel.profile.observe(viewLifecycleOwner) {
             binding.nameProfile.text = it.toString()
         }
