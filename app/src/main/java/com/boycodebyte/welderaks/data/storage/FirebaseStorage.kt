@@ -11,9 +11,13 @@ import com.boycodebyte.welderaks.data.models.CalendarData
 import com.google.firebase.database.FirebaseDatabase
 
 
+const val SYSTEM_CHILD = "system"
 const val PROFILES_CHILD = "profiles"
 const val INSTRUMENTS_CHILD = "instruments"
 const val CALENDARS_CHILD = "calendars"
+
+//child of SYSTEM_CHILD
+const val UVID_CHILD = "uvid"
 
 //child of PROFILES_CHILD
 const val LOGIN_CHILD = "login"
@@ -41,13 +45,23 @@ const val COEFFICIENT_CHILD = "coefficient"
 const val HOURS_CHILD = "hours"
 
 
-
-
 typealias LoginUsersCallback = (List<LoginUser>) -> Unit
 
 typealias InstrumentsCallback = (List<Instrument>) -> Unit
 
 class FirebaseStorage {
+
+    fun isUvidEquals(uvid: String): Boolean {
+        val myRef = FirebaseDatabase.getInstance().reference
+        val request = myRef.child(SYSTEM_CHILD).child(UVID_CHILD).get()
+        while (!request.isComplete) {
+        }
+        if (request.isSuccessful) {
+            return uvid == request.result.value.toString()
+        } else {
+            throw Exception()
+        }
+    }
 
     fun getProfilesList(): List<Profile> {
         val myRef = FirebaseDatabase.getInstance().reference
@@ -114,7 +128,8 @@ class FirebaseStorage {
                     id = instrumentChild.key.toString().toInt(),
                     name = instrumentChild.child(NAME_CHILD).value.toString(),
                     description = instrumentChild.child(DESCRIPTION_CHILD).value.toString(),
-                    idOfProfile = instrumentChild.child(ID_PROFILE_CHILD).value.toString().toInt()
+                    idOfProfile = instrumentChild.child(ID_PROFILE_CHILD).value.toString()
+                        .toInt()
                 )
                 instrumentList.add(instrument)
             }
@@ -214,7 +229,7 @@ class FirebaseStorage {
     }
 
     fun getProfileById(id: Int): Profile {
-        return getProfilesList().firstOrNull{ it.id == id } ?: throw ProfileRequestException()
+        return getProfilesList().firstOrNull { it.id == id } ?: throw ProfileRequestException()
     }
 
     fun setDayData(id: Int, date: Calendar, day: CalendarData.Day) {
