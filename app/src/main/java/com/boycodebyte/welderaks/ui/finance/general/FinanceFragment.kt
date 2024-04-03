@@ -134,6 +134,7 @@ class FinanceFragment : Fragment() {
         binding.prepayment.text = state.prepayment
         binding.salary.text = state.salary
         binding.award.text = state.award
+        binding.amount.text = state.amount
     }
 
     private fun calendarVisible(isVisible: Boolean) {

@@ -170,7 +170,8 @@ class FinanceViewModel : ViewModel() {
         _paymentState.value = PaymentState(
             prepayment = month.prepayment.toString(),
             salary = month.salary.toString(),
-            award = month.award.toString()
+            award = month.award.toString(),
+            amount = (month.prepayment + month.salary + month.award).toString()
         )
     }
 

@@ -157,6 +157,29 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/salary"/>
 
+
+        <TextView
+            android:id="@+id/amount_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Итого: "
+            android:textSize="30sp"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="@id/amount"
+            app:layout_constraintEnd_toStartOf="@id/amount"/>
+
+        <TextView
+            android:id="@+id/amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="30sp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.945"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/award"/>
+
         <TextView
             android:id="@+id/no_data_label"
             android:layout_width="wrap_content"
